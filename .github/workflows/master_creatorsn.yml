@@ -31,7 +31,13 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: .
+          path: './dist'
+        
+      - name: Upload artifact for deployment job (Package.json)
+        uses: actions/upload-artifact@v2
+        with:
+          name: node-app
+          path: './package.json'
 
   deploy:
     runs-on: ubuntu-latest
@@ -53,4 +59,4 @@ jobs:
           app-name: 'CreatorSN'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_08F7FECDD13D4753A4A9795817988AA9 }}
-          package: './dist'
+          package: .

@@ -53,4 +53,4 @@ jobs:
           app-name: 'CreatorSN'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_08F7FECDD13D4753A4A9795817988AA9 }}
-          package: .
+          package: './dist'

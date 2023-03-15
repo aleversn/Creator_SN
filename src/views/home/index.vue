@@ -58,6 +58,7 @@
         <fv-flip-view
             v-model="sliderList"
             theme="dark"
+            autoPlayDuration="10000"
             style="width: 100%; min-height: 100%; height: 100%;"
         >
             <template v-slot:item="x">
@@ -70,7 +71,7 @@
                         class="container-text"
                         v-html="x.data.content"
                         style="font-size: 32px;"
-                        :style="{color: x.data.color}"
+                        :style="{color: x.data.color, margin: x.data.margin}"
                     ></span>
                 </div>
             </template>
@@ -114,7 +115,7 @@
                 <div style="width: 50px; height: auto; margin-left: 30%; float: left;">
                     <a href="http://m.weibo.cn/u/5640347073">
                         <img
-                            src="@/assets/contact/weibo.png"
+                            src="@/assets/contact/weibo.svg"
                             width="500"
                             height="160"
                             alt
@@ -123,7 +124,7 @@
                     </a>
                     <a href="Share.html">
                         <img
-                            src="@/assets/contact/wechat.png"
+                            src="@/assets/contact/wechat.svg"
                             width="500"
                             height="379"
                             alt
@@ -132,7 +133,7 @@
                     </a>
                     <a href="Share.html">
                         <img
-                            src="@/assets/contact/qq.png"
+                            src="@/assets/contact/qq.svg"
                             width="500"
                             height="500"
                             alt
@@ -147,7 +148,7 @@
         </div>
         <div
             class="ret-top-div"
-            onclick="Retop()"
+            @click="retop"
         >
             <span
                 class="ms-Icon ms-Icon--ChevronUp"
@@ -239,7 +240,12 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        -webkit-animation: rtd-off 0.5s both;
+        transition: all 0.5s;
+
+        &:hover
+        {
+            background: rgba(0, 120, 212, 1);
+        }
     }
 
     .a_link {
@@ -318,11 +324,12 @@
         background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9));
 
         .contact_icon {
-            width: 100%;
-            margin-top: 10%;
+            width: auto;
+            margin-top: 35px;
             margin-left: 30%;
-            height: auto;
+            height: 30px;
             opacity: 0.7;
+            filter: invert(1);
             float: left;
             &:hover {
                 opacity: 1;
@@ -440,6 +447,8 @@
 </style>
 
 <script>
+import gsap from "gsap";
+
 export default {
     data() {
         return {
@@ -448,19 +457,22 @@ export default {
                     src: require("@/assets/p0.png"),
                     content: `If You Are Also Interesting in Developping
 				<br />Whatever you like
-				<br />C,C++ C# Java JavaScript Python...
-				<br />Come and Contact Me.`,
-                    color: "rgba(255, 255, 255, 0.8)"
+				<br />C/C++ C# Java JavaScript Python...
+				<br />Come and Contact Us.`,
+                    color: "rgba(255, 255, 255, 0.8)",
+                    margin: "0"
                 },
                 {
                     src: require("@/assets/p1.png"),
                     content: `We Also Like To Share Some Ideas About Photograph.`,
-                    color: "rgba(255, 255, 255, 0.8)"
+                    color: "rgba(75, 75, 75, 0.8)",
+                    margin: "-100px 0 0 0"
                 },
                 {
                     src: require("@/assets/p2.png"),
                     content: `Let’s Create Some Fabulous Stuff.`,
-                    color: "rgba(255, 255, 255, 0.8)"
+                    color: "rgba(255, 255, 255, 0.8)",
+                    margin: "0"
                 },
             ],
             show: {
@@ -468,5 +480,13 @@ export default {
             },
         };
     },
+    methods: {
+        retop () {
+            gsap.to(
+                document.querySelector(".home-container"),
+                { scrollTop: 0, duration: 0.5 }
+            );
+        }
+    }
 };
 </script>

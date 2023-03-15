@@ -32,11 +32,9 @@ jobs:
         with:
           name: node-app
           path: |
-            ./dist
-            ./package.json
-          exclude: |
-            node_modules
-            *.log
+            .
+            !node_modules
+            !*.log
 
   deploy:
     runs-on: ubuntu-latest

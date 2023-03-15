@@ -32,6 +32,9 @@ jobs:
         with:
           name: node-app
           path: .
+          exclude: |
+            node_modules
+            *.log
 
   deploy:
     runs-on: ubuntu-latest

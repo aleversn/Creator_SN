@@ -14,6 +14,18 @@ const routes = [
         component: () => AsyncLoad(import("@/views/home"))
     },
     {
+        path: "/team",
+        name: "Team",
+        component: () => AsyncLoad(import("@/views/team")),
+        children: [
+            {
+                path: "",
+                name: "lpc",
+                component: () => AsyncLoad(import("@/views/team/cv/lpc"))
+            }
+        ]
+    },
+    {
         path: "/dev",
         name: "Dev",
         component: () => AsyncLoad(import("@/views/dev"))

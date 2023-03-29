@@ -3,18 +3,20 @@
         <div class="main_block">
             <div class="d-1">
                 <img
-                    src="@/assets/logo.png"
+                    src="@/assets/logo/logo.png"
+                    class="logo"
+                    draggable="false"
                     width="110"
                     height="58"
                     alt
                     ondragstart="return false;"
                     oncontextmenu="return false;"
-                    style="width: auto; height: 50px; margin: 25px 10px 0 25px; float: left; z-index: 2;"
                 />
                 <div class="link-block">
                     <a
                         class="a_link"
                         onselectstart="return false;"
+                        @click="$Go('/team')"
                     >Team</a>
                     <a
                         class="a_link"
@@ -96,6 +98,7 @@
                         borderRadius="8"
                         background="black"
                         style="width: 150px; height: 45px; margin-top: 15px;"
+                        @click="$Go('/team')"
                     >了解更多</fv-button>
                     <fv-button
                         theme="dark"
@@ -178,12 +181,45 @@
             width: 100%;
             height: 100px;
             background: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             z-index: 2;
-        }
 
-        .link-block {
-            margin-top: 10px;
-            float: right;
+            .logo {
+                width: auto;
+            height: 50px;
+            margin: 0px 25px;
+            z-index: 2;
+                filter: grayscale(1) brightness(150%);
+            }
+
+            .link-block {
+                flex: 1;
+                height: 100%;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+
+                .a_link {
+                    margin-right: 30px;
+                    font-size: 30px;
+                    font-family: "微软雅黑";
+                    color: rgba(255, 255, 255, 1);
+                    text-decoration: none;
+                    transition: all 0.3s;
+                    cursor: pointer;
+                    
+                    
+                    &:hover {
+                        color: rgba(0, 120, 212, 0.8);
+                    }
+
+                    &:active {
+                        color: rgba(0, 120, 212, 1);    
+                    }
+                }
+            }
         }
 
         .s-link-block {
@@ -242,27 +278,11 @@
         align-items: center;
         transition: all 0.5s;
 
-        &:hover
-        {
+        &:hover {
             background: rgba(0, 120, 212, 1);
         }
     }
 
-    .a_link {
-        margin-right: 30px;
-        font-size: 30px;
-        font-family: "微软雅黑";
-        color: rgba(255, 255, 255, 1);
-        text-decoration: none;
-        cursor: pointer;
-        -webkit-animation: a_link_normal 0.2s both;
-        &:hover {
-            -webkit-animation: a_link_lighter 0.2s both;
-        }
-        &:active {
-            -webkit-animation: a_link_down 0.1s both;
-        }
-    }
     .login {
         font-size: 18px;
         font-family: "微软雅黑";
@@ -460,19 +480,19 @@ export default {
 				<br />C/C++ C# Java JavaScript Python...
 				<br />Come and Contact Us.`,
                     color: "rgba(255, 255, 255, 0.8)",
-                    margin: "0"
+                    margin: "0",
                 },
                 {
                     src: require("@/assets/p1.png"),
                     content: `We Also Like To Share Some Ideas About Photograph.`,
                     color: "rgba(75, 75, 75, 0.8)",
-                    margin: "-100px 0 0 0"
+                    margin: "-100px 0 0 0",
                 },
                 {
                     src: require("@/assets/p2.png"),
                     content: `Let’s Create Some Fabulous Stuff.`,
                     color: "rgba(255, 255, 255, 0.8)",
-                    margin: "0"
+                    margin: "0",
                 },
             ],
             show: {
@@ -481,12 +501,12 @@ export default {
         };
     },
     methods: {
-        retop () {
-            gsap.to(
-                document.querySelector(".home-container"),
-                { scrollTop: 0, duration: 0.5 }
-            );
-        }
-    }
+        retop() {
+            gsap.to(document.querySelector(".home-container"), {
+                scrollTop: 0,
+                duration: 0.5,
+            });
+        },
+    },
 };
 </script>

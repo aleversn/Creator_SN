@@ -145,8 +145,12 @@
                     </a>
                 </div>
             </div>
-            <div style="position: relative; width: 100%; height: 30px; float: left;">
-                <span style="color: rgba(255,255,255,0.5); font-family: '微软雅黑'; font-size: 12px; font-weight: 100; float: right;">闽ICP备2023010064号 | Creator SN®</span>
+            <div class="bottom-banner-block">
+                <span class="bottom-banner-span"><a
+                        href="https://beian.miit.gov.cn/#/Integrated/index"
+                        class="icp"
+                        style="color: rgba(255,255,255,0.5);"
+                    >闽ICP备2023010064号</a> | Creator SN®</span>
             </div>
         </div>
         <div
@@ -188,9 +192,9 @@
 
             .logo {
                 width: auto;
-            height: 50px;
-            margin: 0px 25px;
-            z-index: 2;
+                height: 50px;
+                margin: 0px 25px;
+                z-index: 2;
                 filter: grayscale(1) brightness(150%);
             }
 
@@ -209,14 +213,13 @@
                     text-decoration: none;
                     transition: all 0.3s;
                     cursor: pointer;
-                    
-                    
+
                     &:hover {
                         color: rgba(0, 120, 212, 0.8);
                     }
 
                     &:active {
-                        color: rgba(0, 120, 212, 1);    
+                        color: rgba(0, 120, 212, 1);
                     }
                 }
             }
@@ -358,6 +361,33 @@
             &:active {
                 opacity: 0.9;
                 float: left;
+            }
+        }
+
+        .bottom-banner-block {
+            @include HendVcenter;
+
+            position: relative;
+            width: 100%;
+            height: 30px;
+            float: left;
+
+            .bottom-banner-span {
+                margin: 0px 5px;
+                color: rgba(255, 255, 255, 0.5);
+                font-family: "微软雅黑";
+                font-size: 12px;
+                font-weight: 100;
+                float: right;
+
+                .icp {
+                    color: rgba(255, 255, 255, 0.5);
+                    text-decoration: none;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
             }
         }
     }

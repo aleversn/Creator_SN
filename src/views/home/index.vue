@@ -146,7 +146,7 @@
                 </div>
             </div>
             <div style="position: relative; width: 100%; height: 30px; float: left;">
-                <span style="color: rgba(255,255,255,0.5); font-family: '微软雅黑'; font-size: 12px; font-weight: 100; float: right;">闽ICP备17000947号 | Creator SN®</span>
+                <span style="color: rgba(255,255,255,0.5); font-family: '微软雅黑'; font-size: 12px; font-weight: 100; float: right;">闽ICP备2023010064号 | Creator SN®</span>
             </div>
         </div>
         <div

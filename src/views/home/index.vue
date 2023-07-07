@@ -2,16 +2,19 @@
     <div class="home-container">
         <div class="main_block">
             <div class="d-1">
-                <img
-                    src="@/assets/logo/logo.png"
-                    class="logo"
-                    draggable="false"
-                    width="110"
-                    height="58"
-                    alt
-                    ondragstart="return false;"
-                    oncontextmenu="return false;"
-                />
+                <div class="left-block">
+                    <img
+                        src="@/assets/logo/logo.png"
+                        class="logo"
+                        draggable="false"
+                        width="110"
+                        height="58"
+                        alt
+                        ondragstart="return false;"
+                        oncontextmenu="return false;"
+                    />
+                    <p class="left-info">创造者团队</p>
+                </div>
                 <div class="link-block">
                     <a
                         class="a_link"
@@ -190,12 +193,23 @@
             align-items: center;
             z-index: 2;
 
-            .logo {
-                width: auto;
-                height: 50px;
-                margin: 0px 25px;
-                z-index: 2;
-                filter: grayscale(1) brightness(150%);
+            .left-block {
+                @include Vcenter;
+
+                .logo {
+                    width: auto;
+                    height: 50px;
+                    margin: 0px 25px;
+                    z-index: 2;
+                    filter: grayscale(1) brightness(150%);
+                }
+
+                .left-info {
+                    font-size: 28px;
+                    color: rgba(225, 220, 220, 0.92);
+                    font-weight: bold;
+                    user-select: none;
+                }
             }
 
             .link-block {
@@ -449,6 +463,14 @@
 @media screen and (max-width: 1024px) {
     .home-container {
         .main_block {
+            .left-block {
+                @include Vcenter;
+
+                .left-info {
+                    display: none;
+                }
+            }
+            
             .link-block {
                 display: none;
             }

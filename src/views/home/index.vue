@@ -149,11 +149,24 @@
                 </div>
             </div>
             <div class="bottom-banner-block">
-                <span class="bottom-banner-span"><a
+                <span class="bottom-banner-span">
+                    <a
+                        class="icp"
+                        target="_blank"
+                        href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=35012102500791"
+                    ><img
+                            draggable="false"
+                            src="@/assets/gov/gongan.png"
+                        />
+                        闽公网安备 35012102500791号
+                    </a>
+                    <a
                         href="https://beian.miit.gov.cn/#/Integrated/index"
                         class="icp"
-                        style="color: rgba(255,255,255,0.5);"
-                    >闽ICP备2023010064号</a> | Creator SN®</span>
+                    >
+                        闽ICP备2023010064号
+                    </a> Creator SN®
+                </span>
             </div>
         </div>
         <div
@@ -387,6 +400,8 @@
             float: left;
 
             .bottom-banner-span {
+                @include HendVcenter;
+
                 margin: 0px 5px;
                 color: rgba(255, 255, 255, 0.5);
                 font-family: "微软雅黑";
@@ -395,11 +410,20 @@
                 float: right;
 
                 .icp {
+                    @include Vcenter;
+
+                    margin: 0px 5px;
                     color: rgba(255, 255, 255, 0.5);
                     text-decoration: none;
 
                     &:hover {
                         text-decoration: underline;
+                    }
+
+                    img {
+                        width: 13px;
+                        height: auto;
+                        margin: 0px 5px;
                     }
                 }
             }
@@ -470,7 +494,7 @@
                     display: none;
                 }
             }
-            
+
             .link-block {
                 display: none;
             }

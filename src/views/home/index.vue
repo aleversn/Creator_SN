@@ -13,7 +13,7 @@
                         ondragstart="return false;"
                         oncontextmenu="return false;"
                     />
-                    <p class="left-info">创造者团队</p>
+                    <p class="left-info">创造者官网</p>
                 </div>
                 <div class="link-block">
                     <a

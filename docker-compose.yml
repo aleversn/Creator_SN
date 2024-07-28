@@ -4,4 +4,4 @@ services:
     build: .
     ports:
       - "60081:80"
-    restart: on-failure
+    restart: always

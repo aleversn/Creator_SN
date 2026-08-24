@@ -7,10 +7,13 @@
     "dev": "vite",
     "serve": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "api": "api-cli get http://localhost:60031/openapi.json -d ./src/api"
   },
   "dependencies": {
     "core-js": "^3.6.4",
+    "axios": "^1.7.9",
+    "axios-swagger-helper": "^0.0.58",
     "dart-sass": "^1.25.0",
     "prosemirror-commands": "^1.1.4",
     "prosemirror-history": "^1.1.3",

@@ -2,6 +2,8 @@ import os
 import json
 import base64
 import datetime
+import shutil
+from pathlib import Path
 from typing import Optional
 from tortoise.expressions import Q
 from fastapi import APIRouter, File, UploadFile
@@ -20,6 +22,19 @@ pwd_prefix = 'pku_dair'
 with open('./api/app_config.json') as f:
     app_config = json.load(f)
 auth = Auth(app_config=app_config)
+
+BACKEND_DIR = Path(__file__).resolve().parents[2]
+DEFAULT_AVATAR_PATH = BACKEND_DIR / 'assets' / 'default-avatar.png'
+
+
+def _ensure_avatar_file(user_id: str) -> str:
+    """Materialize the branded default so the shared compressor can cache it."""
+    image_dir = Path('user') / user_id
+    image_dir.mkdir(parents=True, exist_ok=True)
+    avatar_path = image_dir / 'avatar.jpg'
+    if not avatar_path.exists() and DEFAULT_AVATAR_PATH.exists():
+        shutil.copyfile(DEFAULT_AVATAR_PATH, avatar_path)
+    return str(image_dir)
 
 
 def _encode_pwd(raw_pwd: str) -> str:
@@ -207,11 +222,7 @@ async def upload_avatar(user_avatar: UploadFile = File(...), valid_info=None):
 
 @router.get('/user/avatar', summary='Get user avatar', operation_id='GetUserAvatar')
 async def get_user_avatar(id):
-    image_dir = f'user/{id}'
-    file_path = os.path.join(image_dir, 'avatar.jpg')
-    if not os.path.exists(file_path):
-        return response_body(code=404, status='failed', message='Avatar not found')
-
+    image_dir = _ensure_avatar_file(id)
     return response_body(code=200, status='success', data=get_compressed_image_data_url(image_dir))
 
 
@@ -219,11 +230,7 @@ async def get_user_avatar(id):
 @auth.require_user()
 async def get_my_avatar(valid_info=None):
     user_id = valid_info['userid']
-    image_dir = f'user/{user_id}'
-    file_path = os.path.join(image_dir, 'avatar.jpg')
-    if not os.path.exists(file_path):
-        return response_body(code=404, status='failed', message='Avatar not found')
-
+    image_dir = _ensure_avatar_file(user_id)
     return response_body(code=200, status='success', data=get_compressed_image_data_url(image_dir))
 
 

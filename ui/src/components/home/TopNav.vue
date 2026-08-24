@@ -26,14 +26,20 @@
 			>
 				{{ appStore.language === "cn" ? "EN" : "中文" }}
 			</button>
+			<router-link class="account-link" :to="userStore.isLoggedIn ? '/profile' : '/login'">
+				{{ userStore.isLoggedIn ? (userStore.info.name || userStore.info.userid) : "登录" }}
+			</router-link>
 		</nav>
 	</header>
 </template>
 
 <script setup>
 import { useAppStore } from "@/store";
+import { useUserStore } from "@/stores/useUser";
 
 const appStore = useAppStore();
+const userStore = useUserStore();
+userStore.hydrate();
 const local = (text) => appStore.local(text);
 const toggleLanguage = () =>
 	appStore.setLanguage(appStore.language === "cn" ? "en" : "cn");

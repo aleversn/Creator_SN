@@ -5,8 +5,13 @@
 </template>
 
 <script>
+import { useUserStore } from "@/stores/useUser";
+
 export default {
-	name: "App"
+	name: "App",
+	created() {
+		useUserStore().hydrate();
+	}
 };
 </script>
 

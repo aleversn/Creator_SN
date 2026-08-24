@@ -6,6 +6,8 @@ This backend is based on the structure of `DAIR_Portal_BE` and currently include
 - SQLite database initialization and monthly backup helper
 - JWT authentication, response/request models, and user management
 - Resource management for members and products, including product reviews, attributes, and images
+- Invited registration, JWT login, profile/password management, and avatar upload
+- Branded default avatar materialized into the image cache when a user has no uploaded avatar
 
 Other DAIR management controllers (news, publications, education, awards, teams, and taxonomy maintenance) are intentionally not registered yet.
 

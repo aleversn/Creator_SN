@@ -69,27 +69,27 @@
 		>
 			<template #container
 				><div class="editor-panel">
-					<label
+					<span class="bind-user-label"
 						>{{ local("Bind user")
-						}}<select v-model="form.userid">
-							<option value="">
-								{{ local("Unbound resume") }}
-							</option>
-							<option
-								v-for="user in users"
-								:key="user.userid"
-								:value="user.userid"
-							>
-								{{ user.name || user.userid }} ·
-								{{ user.userid }}
-							</option>
-						</select></label
+						}}<fv-combobox
+							v-model="userOption"
+							class="user-picker"
+							theme="light"
+							:options="userOptions"
+							:placeholder="local('Unbound resume')"
+							background="rgba(255,255,255,.72)"
+							border-color="rgba(241, 222, 252, 0.3)"
+							choosenSliderBackground="rgba(163, 121, 225, 1)"
+							:reveal-border="true"
+							:is-box-shadow="true"
+							style="z-index: 9"
+							@choose-item="selectUser" /></span
 					><power-editor
 						:model-value="editorValue(form.introduction)"
 						editor-background="transparent"
 						editor-out-side-background="transparent"
 						@save-json="saveContent"
-                        style="width: 100%;"
+						style="width: 100%"
 					></power-editor>
 					<p class="hint">
 						{{
@@ -134,6 +134,8 @@ export default {
 				userid: "",
 				introduction: { type: "doc", content: [] },
 			},
+			userOption: { key: "", value: "", text: "" },
+			userOptions: [],
 			head: [
 				{ content: "Member", width: 230 },
 				{ content: "Bound user", width: 220 },
@@ -166,7 +168,21 @@ export default {
 		},
 		async loadUsers() {
 			const result = await UserApi.list(undefined, 0, 9999);
-			if (result.code === 200) this.users = result.data || [];
+			if (result.code === 200) {
+				this.users = result.data || [];
+				this.rebuildUserOptions();
+				this.userOption = this.findUserOption(this.form.userid);
+			}
+		},
+		rebuildUserOptions() {
+			this.userOptions = [
+				{ key: "", value: "", text: this.local("Unbound resume") },
+				...this.users.map((user) => ({
+					key: user.userid,
+					value: user.userid,
+					text: `${user.name || user.userid} · ${user.userid}`,
+				})),
+			];
 		},
 		openCreate() {
 			this.editing = false;
@@ -175,6 +191,7 @@ export default {
 				userid: "",
 				introduction: { type: "doc", content: [] },
 			};
+			this.userOption = this.findUserOption("");
 			this.visible = true;
 		},
 		openEdit(item) {
@@ -184,7 +201,18 @@ export default {
 				userid: item.userid || "",
 				introduction: item.introduction || { type: "doc", content: [] },
 			};
+			this.userOption = this.findUserOption(this.form.userid);
 			this.visible = true;
+		},
+		findUserOption(userid) {
+			return (
+				this.userOptions.find((option) => option.value === userid) ||
+				this.userOptions[0]
+			);
+		},
+		selectUser(option) {
+			this.userOption = option;
+			this.form.userid = option?.value || "";
 		},
 		normalizeContent(content) {
 			if (!content) return { type: "doc", content: [] };
@@ -298,7 +326,8 @@ export default {
 	gap: 16px;
 	padding: 20px;
 }
-.editor-panel label {
+.editor-panel label,
+.editor-panel .bind-user-label {
 	display: grid;
 	gap: 7px;
 	color: #5d5570;
@@ -311,6 +340,9 @@ export default {
 	border-radius: 10px;
 	background: #fffafc;
 	font: inherit;
+}
+.editor-panel .user-picker {
+	width: 100%;
 }
 .editor-panel power-editor {
 	min-height: 500px;

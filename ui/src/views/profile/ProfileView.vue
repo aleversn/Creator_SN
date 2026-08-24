@@ -48,26 +48,65 @@
 					/>
 				</div>
 				<div class="profile-grid">
-					<label
+					<span class="profile-field"
 						>{{ local("Nickname")
-						}}<input v-model="form.name" /></label
-					><label
+						}}<fv-text-box
+							v-model="form.name"
+							class="profile-input"
+							theme="light"
+							background="rgba(255,255,255,.72)"
+							border-color="rgba(241, 222, 252, 0.3)"
+							:focus-border-color="'rgba(243, 181, 89, 1)'"
+							:border-width="2"
+							:border-radius="12"
+							:reveal-border="true"
+							:is-box-shadow="true"
+					/></span>
+					<span class="profile-field"
 						>{{ local("Email")
-						}}<input v-model="form.email" type="email" /></label
-					><label
+						}}<fv-text-box
+							v-model="form.email"
+							class="profile-input"
+							type="email"
+							theme="light"
+							background="rgba(255,255,255,.72)"
+							border-color="rgba(241, 222, 252, 0.3)"
+							:focus-border-color="'rgba(243, 181, 89, 1)'"
+							:border-width="2"
+							:border-radius="12"
+							:reveal-border="true"
+							:is-box-shadow="true"
+					/></span>
+					<span class="profile-field"
 						>{{ local("Phone")
-						}}<input v-model="form.phone" /></label
-					><label
+						}}<fv-text-box
+							v-model="form.phone"
+							class="profile-input"
+							theme="light"
+							background="rgba(255,255,255,.72)"
+							border-color="rgba(241, 222, 252, 0.3)"
+							:focus-border-color="'rgba(243, 181, 89, 1)'"
+							:border-width="2"
+							:border-radius="12"
+							:reveal-border="true"
+							:is-box-shadow="true"
+					/></span>
+					<span class="profile-field"
 						>{{ local("Gender")
-						}}<select v-model="form.gender">
-							<option value="">{{ local("Not set") }}</option>
-							<option value="male">{{ local("Male") }}</option>
-							<option value="female">
-								{{ local("Female") }}
-							</option>
-							<option value="other">{{ local("Other") }}</option>
-						</select></label
-					>
+						}}<fv-combobox
+							v-model="genderOption"
+							class="profile-input"
+							theme="light"
+							:options="genderOptions"
+							:placeholder="local('Not set')"
+							background="rgba(255,255,255,.72)"
+							border-color="rgba(241, 222, 252, 0.3)"
+							choosenSliderBackground="rgba(163, 121, 225, 1)"
+							:border-width="2"
+							:border-radius="12"
+							:reveal-border="true"
+							:is-box-shadow="true"
+					/></span>
 				</div>
 				<div class="section">
 					<h3>{{ local("Change avatar") }}</h3>
@@ -96,17 +135,35 @@
 				<div class="section password">
 					<h3>{{ local("Change password") }}</h3>
 					<div class="profile-grid">
-						<label
+						<span class="profile-field"
 							>{{ local("Current password")
-							}}<input
+							}}<fv-text-box
 								v-model="password.pwd"
-								type="password" /></label
-						><label
-							>{{ local("New password")
-							}}<input
-								v-model="password.confirm_pwd"
+								class="profile-input"
 								type="password"
-						/></label>
+								theme="light"
+								background="rgba(255,255,255,.72)"
+								border-color="rgba(241, 222, 252, 0.3)"
+								:focus-border-color="'rgba(243, 181, 89, 1)'"
+								:border-width="2"
+								:border-radius="12"
+								:reveal-border="true"
+								:is-box-shadow="true" /></span
+						><span class="profile-field"
+							>{{ local("New password")
+							}}<fv-text-box
+								v-model="password.confirm_pwd"
+								class="profile-input"
+								type="password"
+								theme="light"
+								background="rgba(255,255,255,.72)"
+								border-color="rgba(241, 222, 252, 0.3)"
+								:focus-border-color="'rgba(243, 181, 89, 1)'"
+								:border-width="2"
+								:border-radius="12"
+								:reveal-border="true"
+								:is-box-shadow="true"
+						/></span>
 					</div>
 					<button
 						class="soft-button"
@@ -122,7 +179,7 @@
 	</main>
 </template>
 <script setup>
-import { computed, reactive, ref, onMounted } from "vue";
+import { computed, reactive, ref, onMounted, watch } from "vue";
 import { UserApi } from "@/api";
 import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/useUser";
@@ -148,6 +205,16 @@ const router = useRouter(),
 	themeStore = useTheme(),
 	heroGradient = computed(() => themeStore.heroGradient);
 const local = useAppStore().local;
+const genderOptions = computed(() => [
+	{ key: "", value: "", text: local("Not set") },
+	{ key: "male", value: "male", text: local("Male") },
+	{ key: "female", value: "female", text: local("Female") },
+	{ key: "other", value: "other", text: local("Other") },
+]);
+const genderOption = ref(genderOptions.value[0]);
+watch(genderOption, (option) => {
+	form.gender = option?.value || "";
+});
 onMounted(async () => {
 	await user.loadMe().catch(() => {});
 	Object.assign(form, {
@@ -156,6 +223,9 @@ onMounted(async () => {
 		phone: info.value.phone || "",
 		gender: info.value.gender || "",
 	});
+	genderOption.value =
+		genderOptions.value.find((option) => option.value === form.gender) ||
+		genderOptions.value[0];
 });
 async function saveProfile() {
 	saving.value = true;
@@ -299,7 +369,11 @@ function logout() {
 	gap: 16px;
 	margin-top: 24px;
 }
-label {
+.profile-input {
+	width: 100%;
+	min-height: 44px;
+}
+.profile-field {
 	display: grid;
 	gap: 7px;
 	color: #5d5570;
@@ -309,7 +383,7 @@ label {
 input,
 select {
 	padding: 11px;
-	border: 1px solid #e1d8ee;
+	border: 1px solid rgba(243, 181, 89, 1);
 	border-radius: 11px;
 	background: #fffafc;
 	font: inherit;

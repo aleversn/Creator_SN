@@ -4,7 +4,7 @@
 			<fv-navigation-view
 				v-model="currentNav"
 				theme="light"
-				title="Creator SN 管理"
+				:title="local('Admin Console')"
 				:options="navList"
 				v-model:expand="isExpand"
 				foreground="#a56bd1"
@@ -21,6 +21,8 @@
 	</div>
 </template>
 <script>
+import { useAppStore } from "@/store";
+
 export default {
 	name: "AdminLayout",
 	data() {
@@ -30,11 +32,11 @@ export default {
 			navList: [
 				{
 					key: 0,
-					name: "用户管理",
+					name: "User Management",
 					icon: "GuestUser",
 					route: "/admin/users",
 				},
-				{ key: -1, name: "返回首页", icon: "Home", route: "/" },
+				{ key: -1, name: "Home", icon: "Home", route: "/" },
 			],
 		};
 	},
@@ -47,6 +49,9 @@ export default {
 		},
 	},
 	methods: {
+		local(text, params) {
+			return useAppStore().local(text, params);
+		},
 		handleItemClick(item) {
 			this.$Go(item.route);
 		},

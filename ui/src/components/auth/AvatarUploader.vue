@@ -1,12 +1,12 @@
 <template>
   <div class="avatar-uploader">
-    <img :src="preview || defaultAvatar" alt="头像预览" class="avatar-preview" />
+    <img :src="preview || defaultAvatar" :alt="local('Avatar preview')" class="avatar-preview" />
     <div class="avatar-actions">
       <label class="upload-button">
-        选择图片
+        {{ local("Select image") }}
         <input type="file" accept="image/png,image/jpeg,image/webp" @change="selectImage" />
       </label>
-      <button v-if="preview" type="button" class="text-button" @click="clear">使用默认头像</button>
+      <button v-if="preview" type="button" class="text-button" @click="clear">{{ local("Use default avatar") }}</button>
     </div>
   </div>
 </template>
@@ -14,8 +14,10 @@
 <script setup>
 import { ref } from "vue";
 import defaultAvatar from "@/assets/default-avatar.png";
+import { useAppStore } from "@/store";
 
 const emit = defineEmits(["update:file"]);
+const local = useAppStore().local;
 const preview = ref("");
 
 function selectImage(event) {

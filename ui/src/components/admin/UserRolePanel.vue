@@ -2,7 +2,7 @@
 	<fv-panel
 		v-model="visible"
 		theme="light"
-		title="用户角色"
+		:title="local('User roles')"
 		width="440px"
 		height="auto"
 		background="rgba(255,255,255,.92)"
@@ -17,10 +17,10 @@
 					<span class="avatar-letter">{{ letter }}</span>
 					<div>
 						<strong>{{ user.userid }}</strong
-						><small>{{ user.email || "Creator SN 用户" }}</small>
+						><small>{{ user.email || local("Creator SN user") }}</small>
 					</div>
 				</div>
-				<p class="panel-caption">可分别授予普通用户与管理员角色</p>
+				<p class="panel-caption">{{ local("Grant regular-user and administrator roles separately") }}</p>
 				<div v-for="role in roles" :key="role.id" class="role-item">
 					<fv-check-box
 						v-model="roleStates[role.id]"
@@ -29,12 +29,12 @@
 						:disabled="busy"
 						@click="toggle(role, $event)"
 						>{{
-							role.id === "admin" ? "管理员" : "普通用户"
+							role.id === "admin" ? local("Administrator") : local("Regular user")
 						}}</fv-check-box
 					><span>{{
 						role.id === "admin"
-							? "可以进入管理端并维护用户权限"
-							: "可以使用 Creator SN 的基础服务"
+							? local("Can access the admin console and manage user permissions")
+							: local("Can use Creator SN basic services")
 					}}</span>
 				</div>
 			</div></template
@@ -46,13 +46,14 @@
 				border-radius="7"
 				style="width: 120px"
 				@click="visible = false"
-				>完成</fv-button
+				>{{ local("Done") }}</fv-button
 			></template
 		>
 	</fv-panel>
 </template>
 <script>
 import { UserApi } from "@/api";
+import { useAppStore } from "@/store";
 export default {
 	name: "UserRolePanel",
 	props: {
@@ -100,6 +101,9 @@ export default {
 		},
 	},
 	methods: {
+		local(text, params) {
+			return useAppStore().local(text, params);
+		},
 		syncRoles() {
 			const current = String(this.user.role || "").split(",");
 			this.roleStates = Object.fromEntries(
@@ -118,16 +122,16 @@ export default {
 					? await UserApi.addRole(this.user.userid, role.id)
 					: await UserApi.removeRole(this.user.userid, role.id);
 				if (result.code !== 200)
-					throw new Error(result.message || "角色更新失败");
+					throw new Error(result.message || this.local("Role update failed"));
 				this.user.role = result.data?.role || this.user.role;
 				this.$emit("updated");
-				this.$barWarning(enabled ? "已授予角色" : "已移除角色", {
+				this.$barWarning(enabled ? this.local("Granted role") : this.local("Removed role"), {
 					status: "correct",
 					theme: this.theme,
 				});
 			} catch (error) {
 				this.roleStates[role.id] = !enabled;
-				this.$barWarning(error.message || "角色更新失败", {
+				this.$barWarning(error.message || this.local("Role update failed"), {
 					status: "error",
 					theme: this.theme,
 				});

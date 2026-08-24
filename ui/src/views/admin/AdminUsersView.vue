@@ -3,18 +3,18 @@
 		<div class="page-header">
 			<div>
 				<span class="eyebrow">CREATOR SN CONTROL ROOM</span>
-				<h1>用户管理</h1>
-				<p>管理邀请注册的成员、权限和账号安全。</p>
+				<h1>{{ local("User Management") }}</h1>
+				<p>{{ local("Manage invited members, permissions, and account security.") }}</p>
 			</div>
 			<div class="header-stat">
 				<strong>{{ total }}</strong
-				><span>位用户</span>
+				><span>{{ local("users") }}</span>
 			</div>
 		</div>
 		<div class="toolbar">
 			<fv-text-box
 				v-model="currentSearch"
-				placeholder="搜索账号或邮箱"
+				:placeholder="local('Search account or email')"
 				icon="Filter"
 				border-radius="6"
 				:reveal-border="true"
@@ -28,14 +28,14 @@
 				:is-box-shadow="true"
 				:disabled="loading"
 				@click="getUsers"
-				>{{ loading ? "加载中…" : "刷新列表" }}</fv-button
+				>{{ loading ? local("Loading…") : local("Refresh list") }}</fv-button
 			>
 		</div>
 		<div class="list-card">
 			<fv-details-list
 				v-model="users"
 				:theme="theme"
-				:head="head"
+				:head="localizedHead"
 				:filter="currentSearch"
 				:foreground="color"
 				style="width: 100%; height: 100%"
@@ -100,23 +100,23 @@
 							border-radius="6"
 							style="flex-shrink: 0"
 							@click="showUserRole(x.item)"
-							>权限</fv-button
+							>{{ local("Permission") }}</fv-button
 						><fv-button
 							theme="light"
 							border-radius="6"
 							style="flex-shrink: 0"
 							@click="resetPassword(x.item)"
-							>重置密码</fv-button
+							>{{ local("Reset password") }}</fv-button
 						>
 					</div></template
 				><template #menu
 					><div class="right-menu">
 						<span @click="showUserRole(currentItem)"
 							><i class="ms-Icon ms-Icon--Permissions"></i>
-							<p>权限管理</p></span
+							<p>{{ local("Manage permissions") }}</p></span
 						><span @click="resetPassword(currentItem)"
 							><i class="ms-Icon ms-Icon--Lock"></i>
-							<p>重置密码</p></span
+							<p>{{ local("Reset password") }}</p></span
 						>
 					</div></template
 				></fv-details-list
@@ -124,8 +124,7 @@
 		</div>
 		<div class="bottom-bar">
 			<span
-				>第 {{ page }} 页 · 每页 {{ pageSize }} 条，共
-				{{ total }} 位用户</span
+				>{{ local("Page {page} · {size} per page, {total} users", { page, size: pageSize, total }) }}</span
 			><fv-pagination
 				:model-value="page"
 				:theme="theme"
@@ -148,6 +147,7 @@
 <script>
 import { UserApi } from "@/api";
 import UserRolePanel from "@/components/admin/UserRolePanel.vue";
+import { useAppStore } from "@/store";
 export default {
 	name: "AdminUsersView",
 	components: { UserRolePanel },
@@ -167,13 +167,13 @@ export default {
 			loading: false,
 			head: [
 				{ content: "No.", width: 70 },
-				{ content: "账号", sortName: "userid", width: 220 },
-				{ content: "姓名", sortName: "name", width: 140 },
-				{ content: "性别", sortName: "gender", width: 100 },
-				{ content: "邮箱", sortName: "email", width: 240 },
-				{ content: "邀请码", sortName: "invite_code", width: 150 },
-				{ content: "电话", sortName: "phone", width: 170 },
-				{ content: "角色 / 操作", sortName: "role", width: 230 },
+				{ content: "Account", sortName: "userid", width: 220 },
+				{ content: "Name", sortName: "name", width: 140 },
+				{ content: "Gender", sortName: "gender", width: 100 },
+				{ content: "Email", sortName: "email", width: 240 },
+				{ content: "Invite code", sortName: "invite_code", width: 150 },
+				{ content: "Phone", sortName: "phone", width: 170 },
+				{ content: "Role / Actions", sortName: "role", width: 230 },
 			],
 		};
 	},
@@ -182,11 +182,17 @@ export default {
 		this.getRoles();
 	},
 	computed: {
+		localizedHead() {
+			return this.head.map((item) => ({ ...item, content: this.local(item.content) }));
+		},
 		totalPages() {
 			return Math.max(1, Math.ceil(this.total / this.pageSize));
 		},
 	},
 	methods: {
+		local(text, params) {
+			return useAppStore().local(text, params);
+		},
 		async getUsers() {
 			this.loading = true;
 			try {
@@ -237,7 +243,7 @@ export default {
 			return (item.name || item.userid || "?").slice(0, 1).toUpperCase();
 		},
 		formatDate(value) {
-			if (!value) return "从未登录";
+			if (!value) return this.local("Never logged in");
 			const date = new Date(value);
 			return Number.isNaN(date.getTime())
 				? value
@@ -248,22 +254,22 @@ export default {
 		},
 		resetPassword(item) {
 			if (!item.userid) return;
-			this.$infoBox(`确定将 ${item.userid} 的密码重置为账号名吗？`, {
+			this.$infoBox(this.local("Reset password for {userid} to the account name?", { userid: item.userid }), {
 				status: "error",
 				theme: this.theme,
-				confirmTitle: "确认",
-				cancelTitle: "取消",
+				confirmTitle: this.local("Confirm"),
+				cancelTitle: this.local("Cancel"),
 				confirm: async () => {
 					try {
 						const result = await UserApi.resetPassword(item.userid);
 						if (result.code !== 200)
-							throw new Error(result.message || "重置失败");
+							throw new Error(result.message || this.local("Reset password"));
 						this.$barWarning(
-							`密码已重置，临时密码：${item.userid}`,
+							this.local("Password reset. Temporary password: {userid}", { userid: item.userid }),
 							{ status: "correct", theme: this.theme },
 						);
 					} catch (error) {
-						this.$barWarning(error.message || "重置失败", {
+						this.$barWarning(error.message || this.local("Reset password"), {
 							status: "error",
 							theme: this.theme,
 						});

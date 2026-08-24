@@ -17,7 +17,7 @@
 			</p>
 			<fv-button
 				class="hero-button"
-				theme="light"
+				theme="dark"
 				background="radial-gradient(ellipse 62% 125% at 100% 50%, rgba(255, 213, 188, 0.98) 0%, rgba(255, 184, 190, 0.92) 18%, rgba(245, 143, 202, 0.62) 40%, rgba(245, 143, 202, 0) 74%), linear-gradient(90deg, #8f61e7 0%, #b66de3 35%, #d777d4 65%, #ed8ebf 100%)"
 				foreground="#ffffff"
 				border-color="#efb2e7"

@@ -7,10 +7,10 @@ export const useAppStore = defineStore("app", {
     i18n
   }),
   getters: {
-    local: (state) => (text) => {
+    local: (state) => (text, params = {}) => {
       const result = state.i18n[text];
-      if (!result) return text;
-      return result[state.language] || result.en || text;
+      const translated = result ? result[state.language] || result.en || text : text;
+      return Object.entries(params).reduce((value, [key, replacement]) => value.replaceAll(`{${key}}`, replacement), translated);
     }
   },
   actions: {

@@ -28,5 +28,101 @@ export default {
   "Contact": { en: "Contact", cn: "联系方式" },
   "Let’s create something fabulous together.": { en: "Let’s create something fabulous together.", cn: "一起创造一些精彩的作品。" },
   "Weibo": { en: "Weibo", cn: "微博" },
-  "lpcsn@qq.com": { en: "lpcsn@qq.com", cn: "lpcsn@qq.com" }
+  "lpcsn@qq.com": { en: "lpcsn@qq.com", cn: "lpcsn@qq.com" },
+  "Home": { en: "Home", cn: "首页" },
+  "Admin Console": { en: "Admin Console", cn: "管理员控制台" },
+  "User Management": { en: "User Management", cn: "用户管理" },
+  "Manage invited members, permissions, and account security.": { en: "Manage invited members, permissions, and account security.", cn: "管理邀请注册的成员、权限和账号安全。" },
+  "users": { en: "users", cn: "位用户" },
+  "Search account or email": { en: "Search account or email", cn: "搜索账号或邮箱" },
+  "Loading…": { en: "Loading…", cn: "加载中…" },
+  "Refresh list": { en: "Refresh list", cn: "刷新列表" },
+  "No.": { en: "No.", cn: "序号" },
+  "Account": { en: "Account", cn: "账号" },
+  "Name": { en: "Name", cn: "姓名" },
+  "Gender": { en: "Gender", cn: "性别" },
+  "Email": { en: "Email", cn: "邮箱" },
+  "Invite code": { en: "Invite code", cn: "邀请码" },
+  "Phone": { en: "Phone", cn: "电话" },
+  "Role / Actions": { en: "Role / Actions", cn: "角色 / 操作" },
+  "Permission": { en: "Permission", cn: "权限" },
+  "Manage permissions": { en: "Manage permissions", cn: "权限管理" },
+  "Reset password": { en: "Reset password", cn: "重置密码" },
+  "Page {page} · {size} per page, {total} users": { en: "Page {page} · {size} per page, {total} users", cn: "第 {page} 页 · 每页 {size} 条，共 {total} 位用户" },
+  "Never logged in": { en: "Never logged in", cn: "从未登录" },
+  "Confirm": { en: "Confirm", cn: "确认" },
+  "Cancel": { en: "Cancel", cn: "取消" },
+  "Reset password for {userid} to the account name?": { en: "Reset {userid}'s password to the account name?", cn: "确定将 {userid} 的密码重置为账号名吗？" },
+  "Password reset. Temporary password: {userid}": { en: "Password reset. Temporary password: {userid}", cn: "密码已重置，临时密码：{userid}" },
+  "User roles": { en: "User roles", cn: "用户角色" },
+  "Creator SN user": { en: "Creator SN user", cn: "Creator SN 用户" },
+  "Grant regular-user and administrator roles separately": { en: "Grant regular-user and administrator roles separately", cn: "可分别授予普通用户与管理员角色" },
+  "Administrator": { en: "Administrator", cn: "管理员" },
+  "Regular user": { en: "Regular user", cn: "普通用户" },
+  "Can access the admin console and manage user permissions": { en: "Can access the admin console and manage user permissions", cn: "可以进入管理端并维护用户权限" },
+  "Can use Creator SN basic services": { en: "Can use Creator SN basic services", cn: "可以使用 Creator SN 的基础服务" },
+  "Done": { en: "Done", cn: "完成" },
+  "Granted role": { en: "Granted role", cn: "已授予角色" },
+  "Removed role": { en: "Removed role", cn: "已移除角色" },
+  "Back to home": { en: "Back to home", cn: "返回首页" },
+  "Welcome back": { en: "WELCOME BACK", cn: "欢迎回来" },
+  "Sign in to Creator SN": { en: "Sign in to Creator SN", cn: "登录 Creator SN" },
+  "Continue your creative journey.": { en: "Continue your creative journey.", cn: "继续你的创造之旅。" },
+  "Account or email": { en: "Account or email", cn: "账号或邮箱" },
+  "At least 6 characters": { en: "At least 6 characters", cn: "至少 6 位密码" },
+  "Signing in…": { en: "Signing in…", cn: "登录中…" },
+  "Sign in": { en: "Sign in", cn: "登录" },
+  "No account yet?": { en: "No account yet?", cn: "还没有账号？" },
+  "Register with invite code": { en: "Register with invite code", cn: "使用邀请码注册" },
+  "Open invitation": { en: "OPEN INVITATION", cn: "开放邀请" },
+  "Create your account": { en: "Create your account", cn: "创建你的账号" },
+  "Invite codes help protect the quality of the Creator SN community.": { en: "Invite codes help protect the quality of the Creator SN community.", cn: "邀请码用于守护 Creator SN 社区的质量。" },
+  "Confirm password": { en: "Confirm password", cn: "确认密码" },
+  "Enter invite code": { en: "Enter invite code", cn: "请输入邀请码" },
+  "Registering…": { en: "Registering…", cn: "创建中…" },
+  "Create account": { en: "Create account", cn: "注册账号" },
+  "Already have an account?": { en: "Already have an account?", cn: "已有账号？" },
+  "Back to sign in": { en: "Back to sign in", cn: "返回登录" },
+  "Profile": { en: "Profile", cn: "个人中心" },
+  "Manage your identity, avatar, and account security.": { en: "Manage your identity, avatar, and account security.", cn: "管理你的身份、头像与账号安全。" },
+  "Admin console": { en: "Admin console", cn: "管理员控制台" },
+  "Sign out": { en: "Sign out", cn: "退出登录" },
+  "No email added": { en: "No email added", cn: "还没有填写邮箱" },
+  "Nickname": { en: "Nickname", cn: "昵称" },
+  "Not set": { en: "Not set", cn: "未设置" },
+  "Male": { en: "Male", cn: "男" },
+  "Female": { en: "Female", cn: "女" },
+  "Other": { en: "Other", cn: "其他" },
+  "Change avatar": { en: "Change avatar", cn: "更换头像" },
+  "Uploading…": { en: "Uploading…", cn: "上传中…" },
+  "Save avatar": { en: "Save avatar", cn: "保存头像" },
+  "Account details": { en: "Account details", cn: "账号资料" },
+  "Saving…": { en: "Saving…", cn: "保存中…" },
+  "Save details": { en: "Save details", cn: "保存资料" },
+  "Change password": { en: "Change password", cn: "修改密码" },
+  "Current password": { en: "Current password", cn: "当前密码" },
+  "New password": { en: "New password", cn: "新密码" },
+  "Update password": { en: "Update password", cn: "更新密码" },
+  "Select image": { en: "Select image", cn: "选择图片" },
+  "Use default avatar": { en: "Use default avatar", cn: "使用默认头像" },
+  "Avatar preview": { en: "Avatar preview", cn: "头像预览" },
+  "Current avatar": { en: "Current avatar", cn: "当前头像" },
+  ,"Password": { en: "Password", cn: "密码" }
+  ,"Registration succeeded, returning to sign in…": { en: "Registration succeeded, returning to sign in…", cn: "注册成功，正在返回登录页…" }
+  ,"Every sign-in opens a new creation.": { en: "Every sign-in opens a new creation.", cn: "让每一次登录，都通往新的创造。" }
+  ,"Open source, AI, and products connected in one light and reliable space.": { en: "Open source, AI, and products connected in one light and reliable space.", cn: "开源、AI 与产品，在一个轻盈而可靠的空间里连接起来。" }
+  ,"Role update failed": { en: "Role update failed", cn: "角色更新失败" }
+  ,"Please enter account and password": { en: "Please enter account and password", cn: "请输入账号和密码" }
+  ,"Sign-in failed": { en: "Sign-in failed", cn: "登录失败" }
+  ,"Please complete the registration form": { en: "Please complete the registration form", cn: "请完整填写注册信息" }
+  ,"Password must be at least 6 characters": { en: "Password must be at least 6 characters", cn: "密码至少需要 6 位" }
+  ,"Passwords do not match": { en: "Passwords do not match", cn: "两次密码不一致" }
+  ,"Registration failed": { en: "Registration failed", cn: "注册失败" }
+  ,"Profile saved": { en: "Profile saved", cn: "资料已保存" }
+  ,"Save failed": { en: "Save failed", cn: "保存失败" }
+  ,"Avatar updated": { en: "Avatar updated", cn: "头像已更新" }
+  ,"Avatar upload failed": { en: "Avatar upload failed", cn: "头像上传失败" }
+  ,"Please fill in both passwords": { en: "Please fill in both passwords", cn: "请填写密码" }
+  ,"Password updated": { en: "Password updated", cn: "密码已更新" }
+  ,"Password update failed": { en: "Password update failed", cn: "密码更新失败" }
 };

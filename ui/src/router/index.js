@@ -39,6 +39,15 @@ const router = createRouter({
       name: "Profile",
       component: tool.AsyncLoad(() => import("@/views/profile/ProfileView.vue")),
       meta: { requiresAuth: true, title: "个人中心 · Creator SN" }
+    },
+    {
+      path: "/admin",
+      component: tool.AsyncLoad(() => import("@/views/admin/AdminLayout.vue")),
+      meta: { requiresAuth: true, requiresAdmin: true, title: "用户管理 · Creator SN" },
+      children: [
+        { path: "", redirect: "/admin/users" },
+        { path: "users", name: "AdminUsers", component: tool.AsyncLoad(() => import("@/views/admin/AdminUsersView.vue")) }
+      ]
     }
   ]
 });
@@ -46,6 +55,9 @@ const router = createRouter({
 router.beforeEach((to) => {
   if (to.meta.requiresAuth && !localStorage.getItem("ApiToken")) {
     return { path: "/login", query: { return_url: to.fullPath } };
+  }
+  if (to.meta.requiresAdmin && !String(localStorage.getItem("ApiUserRole") || "").split(",").includes("admin")) {
+    return { path: "/", query: { denied: "admin" } };
   }
   if (to.meta.title) document.title = to.meta.title;
   return true;

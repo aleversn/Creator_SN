@@ -1,0 +1,78 @@
+<template>
+	<div class="manage-container">
+		<div class="manage-content-block">
+			<fv-navigation-view
+				v-model="currentNav"
+				theme="light"
+				title="Creator SN 管理"
+				:options="navList"
+				v-model:expand="isExpand"
+				foreground="#a56bd1"
+                background="transparent"
+				:flyout-display="1368"
+				:mobile-display="1024"
+				class="navigation-view"
+				:show-setting="false"
+				@item-click="handleItemClick"
+				@back="$Back()"
+			></fv-navigation-view
+			><router-view></router-view>
+		</div>
+	</div>
+</template>
+<script>
+export default {
+	name: "AdminLayout",
+	data() {
+		return {
+			currentNav: {},
+			isExpand: true,
+			navList: [
+				{
+					key: 0,
+					name: "用户管理",
+					icon: "GuestUser",
+					route: "/admin/users",
+				},
+				{ key: -1, name: "返回首页", icon: "Home", route: "/" },
+			],
+		};
+	},
+	mounted() {
+		this.routeFormat();
+	},
+	watch: {
+		$route() {
+			this.routeFormat();
+		},
+	},
+	methods: {
+		handleItemClick(item) {
+			this.$Go(item.route);
+		},
+		routeFormat() {
+			this.currentNav =
+				this.navList.find((item) => this.$route.path === item.route) ||
+				this.navList[0];
+		},
+	},
+};
+</script>
+<style scoped lang="scss">
+.manage-container {
+	position: absolute;
+	inset: 0;
+	overflow: hidden;
+	background: linear-gradient(145deg, #fbf9ff, #f0ebff 52%, #eaf9ff);
+}
+.manage-content-block {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+.navigation-view {
+	z-index: 2;
+	--fv-navigation-background: rgba(255, 255, 255, 0.78);
+}
+</style>

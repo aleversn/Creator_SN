@@ -24,7 +24,7 @@ export default {
         let state = EditorState.create({schema});
         let view = new EditorView(this.$refs.editor, {
             state,
-            plguins: [
+            plugins: [
                 history(),
                 keymap({
                     "Mod-z": undo,

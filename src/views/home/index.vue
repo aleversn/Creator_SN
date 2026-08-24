@@ -84,13 +84,13 @@
         <div style="position: relative; width: 80%; height: auto; margin-left: 10%; text-align: center; float: left; overflow: hidden;">
             <div style="width: 100%; float: left;">
                 <fv-img
-                    :src="require('@/assets/S Information.png')"
+                    src="@/assets/S Information.png"
                     :onlazy="true"
                     style="width: 320px; height: auto; float: left;"
                 />
             </div>
             <img
-                :src="require('@/assets/ad.png')"
+                src="@/assets/ad.png"
                 :onlazy="true"
                 style="width: 100%; max-width: 600px; height: auto;"
             />
@@ -544,13 +544,16 @@
 
 <script>
 import gsap from "gsap";
+import p0 from "@/assets/p0.png";
+import p1 from "@/assets/p1.png";
+import p2 from "@/assets/p2.png";
 
 export default {
     data() {
         return {
             sliderList: [
                 {
-                    src: require("@/assets/p0.png"),
+                    src: p0,
                     content: `If You Are Also Interesting in Developping
 				<br />Whatever you like
 				<br />C/C++ C# Java JavaScript Python...
@@ -559,13 +562,13 @@ export default {
                     margin: "0",
                 },
                 {
-                    src: require("@/assets/p1.png"),
+                    src: p1,
                     content: `We Also Like To Share Some Ideas About Photograph.`,
                     color: "rgba(75, 75, 75, 0.8)",
                     margin: "-100px 0 0 0",
                 },
                 {
-                    src: require("@/assets/p2.png"),
+                    src: p2,
                     content: `Let’s Create Some Fabulous Stuff.`,
                     color: "rgba(255, 255, 255, 0.8)",
                     margin: "0",

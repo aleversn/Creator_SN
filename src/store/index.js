@@ -1,13 +1,8 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import { defineStore } from "pinia";
 
-Vue.use(Vuex);
-
-export default new Vuex.Store({
-    state: {},
-    mutations: {},
-    actions: {},
-    modules: {
-        
-    }
+export const useAppStore = defineStore("app", {
+  state: () => ({}),
+  actions: {}
 });
+
+export default useAppStore;

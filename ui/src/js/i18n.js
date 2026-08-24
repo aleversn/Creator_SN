@@ -107,22 +107,51 @@ export default {
   "Use default avatar": { en: "Use default avatar", cn: "使用默认头像" },
   "Avatar preview": { en: "Avatar preview", cn: "头像预览" },
   "Current avatar": { en: "Current avatar", cn: "当前头像" },
-  ,"Password": { en: "Password", cn: "密码" }
-  ,"Registration succeeded, returning to sign in…": { en: "Registration succeeded, returning to sign in…", cn: "注册成功，正在返回登录页…" }
-  ,"Every sign-in opens a new creation.": { en: "Every sign-in opens a new creation.", cn: "让每一次登录，都通往新的创造。" }
-  ,"Open source, AI, and products connected in one light and reliable space.": { en: "Open source, AI, and products connected in one light and reliable space.", cn: "开源、AI 与产品，在一个轻盈而可靠的空间里连接起来。" }
-  ,"Role update failed": { en: "Role update failed", cn: "角色更新失败" }
-  ,"Please enter account and password": { en: "Please enter account and password", cn: "请输入账号和密码" }
-  ,"Sign-in failed": { en: "Sign-in failed", cn: "登录失败" }
-  ,"Please complete the registration form": { en: "Please complete the registration form", cn: "请完整填写注册信息" }
-  ,"Password must be at least 6 characters": { en: "Password must be at least 6 characters", cn: "密码至少需要 6 位" }
-  ,"Passwords do not match": { en: "Passwords do not match", cn: "两次密码不一致" }
-  ,"Registration failed": { en: "Registration failed", cn: "注册失败" }
-  ,"Profile saved": { en: "Profile saved", cn: "资料已保存" }
-  ,"Save failed": { en: "Save failed", cn: "保存失败" }
-  ,"Avatar updated": { en: "Avatar updated", cn: "头像已更新" }
-  ,"Avatar upload failed": { en: "Avatar upload failed", cn: "头像上传失败" }
-  ,"Please fill in both passwords": { en: "Please fill in both passwords", cn: "请填写密码" }
-  ,"Password updated": { en: "Password updated", cn: "密码已更新" }
-  ,"Password update failed": { en: "Password update failed", cn: "密码更新失败" }
+  "Password": { en: "Password", cn: "密码" },
+  "Registration succeeded, returning to sign in…": { en: "Registration succeeded, returning to sign in…", cn: "注册成功，正在返回登录页…" },
+  "Every sign-in opens a new creation.": { en: "Every sign-in opens a new creation.", cn: "让每一次登录，都通往新的创造。" },
+  "Open source, AI, and products connected in one light and reliable space.": { en: "Open source, AI, and products connected in one light and reliable space.", cn: "开源、AI 与产品，在一个轻盈而可靠的空间里连接起来。" },
+  "Role update failed": { en: "Role update failed", cn: "角色更新失败" },
+  "Please enter account and password": { en: "Please enter account and password", cn: "请输入账号和密码" },
+  "Sign-in failed": { en: "Sign-in failed", cn: "登录失败" },
+  "Please complete the registration form": { en: "Please complete the registration form", cn: "请完整填写注册信息" },
+  "Password must be at least 6 characters": { en: "Password must be at least 6 characters", cn: "密码至少需要 6 位" },
+  "Passwords do not match": { en: "Passwords do not match", cn: "两次密码不一致" },
+  "Registration failed": { en: "Registration failed", cn: "注册失败" },
+  "Profile saved": { en: "Profile saved", cn: "资料已保存" },
+  "Save failed": { en: "Save failed", cn: "保存失败" },
+  "Avatar updated": { en: "Avatar updated", cn: "头像已更新" },
+  "Avatar upload failed": { en: "Avatar upload failed", cn: "头像上传失败" },
+  "Please fill in both passwords": { en: "Please fill in both passwords", cn: "请填写密码" },
+  "Password updated": { en: "Password updated", cn: "密码已更新" },
+  "Password update failed": { en: "Password update failed", cn: "密码更新失败" },
+  "Resume Management": { en: "Resume Management", cn: "简历管理" },
+  "The team behind the work": { en: "The team behind the work", cn: "一起创造作品的团队" },
+  "Meet the creators, engineers, and collaborators building useful things together.": { en: "Meet the creators, engineers, and collaborators building useful things together.", cn: "认识一起构建实用作品的创造者、工程师与协作者。" },
+  "No resumes yet": { en: "No resumes yet", cn: "还没有简历" },
+  "Create your resume from the profile area to appear here.": { en: "Create your resume from the profile area to appear here.", cn: "在个人中心创建简历后，它会显示在这里。" },
+  "Open profile": { en: "Open profile", cn: "打开个人中心" },
+  "Unbound resume": { en: "Unbound resume", cn: "未绑定用户的简历" },
+  "Creator SN member": { en: "Creator SN member", cn: "Creator SN 成员" },
+  "Viewing": { en: "Viewing", cn: "查看中" },
+  "View resume": { en: "View resume", cn: "查看简历" },
+  "Close editor": { en: "Close editor", cn: "关闭编辑器" },
+  "Edit resume": { en: "Edit resume", cn: "编辑简历" },
+  "Use the PowerEditor toolbar to format your resume, then press save in the editor toolbar.": { en: "Use the PowerEditor toolbar to format your resume, then press save in the editor toolbar.", cn: "使用 PowerEditor 工具栏编辑简历，并通过编辑器工具栏保存。" },
+  "Resume saved": { en: "Resume saved", cn: "简历已保存" },
+  "Create, edit, and bind member resumes.": { en: "Create, edit, and bind member resumes.", cn: "创建、编辑并绑定成员简历。" },
+  "Add resume": { en: "Add resume", cn: "添加简历" },
+  "Member": { en: "Member", cn: "成员" },
+  "Bound user": { en: "Bound user", cn: "绑定用户" },
+  "Updated": { en: "Updated", cn: "更新时间" },
+  "Actions": { en: "Actions", cn: "操作" },
+  "Edit": { en: "Edit", cn: "编辑" },
+  "Delete": { en: "Delete", cn: "删除" },
+  "Unbound": { en: "Unbound", cn: "未绑定" },
+  "Bind user": { en: "Bind user", cn: "绑定用户" },
+  "Basic information comes from the bound user's profile.": { en: "Basic information comes from the bound user's profile.", cn: "基础信息来自绑定用户的个人资料。" },
+  "Save resume": { en: "Save resume", cn: "保存简历" },
+  "Delete this resume?": { en: "Delete this resume?", cn: "确定删除这份简历吗？" },
+  "Create your resume to join the team.": { en: "Create your resume to join the team.", cn: "创建简历后即可加入团队展示。" },
+  "Create my resume": { en: "Create my resume", cn: "创建我的简历" }
 };

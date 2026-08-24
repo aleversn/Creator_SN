@@ -7,7 +7,7 @@
 			/><span>{{ local("Creator SN") }}</span></router-link
 		>
 		<nav aria-label="主导航">
-			<router-link to="/team">{{ local("Team") }}</router-link
+			<router-link to="/home/team">{{ local("Team") }}</router-link
 			><a href="#about">{{ local("About") }}</a
 			><a
 				href="https://github.com/Creator-SN"

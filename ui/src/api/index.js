@@ -21,7 +21,15 @@ export const UserApi = {
   roles: () => User.GetAllUserRoles(),
   resetPassword: (userid) => User.ResetUserPassword(null, { userid, pwd: "", confirm_pwd: "" }),
   addRole: (userid, role) => User.AddUserRole({ userid, role }),
-  removeRole: (userid, role) => User.RemoveUserRole({ userid, role })
+  removeRole: (userid, role) => User.RemoveUserRole({ userid, role }),
+  userAvatar: (userid) => User.GetUserAvatar(userid)
+};
+
+export const ResumeApi = {
+  list: () => request("get", "/resume/list"),
+  mine: () => request("get", "/resume/mine"),
+  save: (payload) => request("post", "/resume/save", payload),
+  remove: (id) => request("delete", `/resume/${id}`)
 };
 
 export { client as axios, User };

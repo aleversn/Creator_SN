@@ -21,6 +21,13 @@ class UserDBModel(BaseDBModel):
     last_login = fields.CharField(max_length=255, null=True)
 
 
+class ResumeDBModel(BaseDBModel):
+    id = fields.CharField(max_length=64, pk=True)
+    userid = fields.CharField(max_length=255, unique=True, null=True)
+    introduction = fields.JSONField(null=True)
+    updated_at = fields.CharField(max_length=64, null=True)
+
+
 class MemberDBModel(BaseDBModel):
     id = fields.CharField(max_length=64, pk=True)
     name = fields.CharField(max_length=255)

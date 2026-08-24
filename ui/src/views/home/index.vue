@@ -1,20 +1,13 @@
 <template>
 	<div class="home-page">
-		<TopNav />
-		<main>
-			<HeroSection />
-			<ProjectShowcase />
-			<CapabilitySection />
-		</main>
+		<HomeBanner />
+		<router-view />
 		<ContactFooter />
 	</div>
 </template>
 
 <script setup>
-import TopNav from "@/components/home/TopNav.vue";
-import HeroSection from "@/components/home/HeroSection.vue";
-import ProjectShowcase from "@/components/home/ProjectShowcase.vue";
-import CapabilitySection from "@/components/home/CapabilitySection.vue";
+import HomeBanner from "@/components/home/HomeBanner.vue";
 import ContactFooter from "@/components/home/ContactFooter.vue";
 </script>
 

@@ -36,6 +36,12 @@ export default {
 					icon: "GuestUser",
 					route: "/admin/users",
 				},
+				{
+					key: 1,
+					name: "Resume Management",
+					icon: "ReadingMode",
+					route: "/admin/resumes",
+				},
 				{ key: -1, name: "Home", icon: "Home", route: "/" },
 			],
 		};

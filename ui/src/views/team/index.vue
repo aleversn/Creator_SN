@@ -1,89 +1,44 @@
 <template>
-    <div class="team-container">
-        <div class="team-banner" @click="$Go('/')">
-            <img
-                src="@/assets/logo/logo.png"
-                class="logo"
-                draggable="false"
-                width="110"
-                height="58"
-                alt
-                ondragstart="return false;"
-                oncontextmenu="return false;"
-            />
-            <p class="team-title">Team CV</p>
-        </div>
-        <div class="team-pivot">
-            <fv-pivot :items="team"></fv-pivot>
-        </div>
-        <router-view />
-    </div>
+  <main class="team-page">
+    <section class="team-body">
+      <div class="team-intro"><span class="eyebrow">CREATOR SN COMMUNITY</span><h1>{{ local("The team behind the work") }}</h1><p>{{ local("Meet the creators, engineers, and collaborators building useful things together.") }}</p></div>
+      <div v-if="loading" class="empty-state">{{ local("Loading…") }}</div>
+      <div v-else-if="!resumes.length && !selected" class="empty-state"><strong>{{ local("No resumes yet") }}</strong><span>{{ local("Create your resume to join the team.") }}</span><fv-button v-if="isLoggedIn()" theme="dark" :background="gradient" border-radius="9" @click="createOwnResume">{{ local("Create my resume") }}</fv-button></div>
+      <div v-else class="member-grid">
+        <button v-for="item in resumes" :key="item.id" class="member-card" :class="{ active: selected?.id === item.id }" @click="selectResume(item)">
+          <fv-persona :src="avatarOf(item)" :size="78" theme="light" background="rgba(255,255,255,.8)"></fv-persona>
+          <strong>{{ item.user?.name || item.userid || local("Unbound resume") }}</strong><small>{{ item.user?.email || local("Creator SN member") }}</small><span>{{ selected?.id === item.id ? local("Viewing") : local("View resume") }}</span>
+        </button>
+      </div>
+      <section v-if="selected" class="resume-shell">
+        <div class="resume-heading"><div><span class="eyebrow">{{ selected.user?.userid || selected.userid }}</span><h2>{{ selected.user?.name || selected.userid || local("Unbound resume") }}</h2><p>{{ selected.user?.email || local("Creator SN member") }}<span v-if="selected.user?.phone"> · {{ selected.user.phone }}</span></p></div><fv-button v-if="canEdit(selected)" theme="dark" :background="gradient" border-radius="9" @click="editing = !editing">{{ editing ? local("Close editor") : local("Edit resume") }}</fv-button></div>
+        <div v-if="editing" class="editor-card"><power-editor :value="editorContent" :toolbar-height="56" editor-background="transparent" editor-out-side-background="transparent" @save-json="saveResume"></power-editor><div class="editor-hint">{{ local("Use the PowerEditor toolbar to format your resume, then press save in the editor toolbar.") }}</div></div>
+        <div v-else class="resume-card"><power-editor :value="selected.introduction" :editable="false" read-only-padding-top="12" editor-background="transparent" editor-out-side-background="transparent"></power-editor></div>
+      </section>
+    </section>
+  </main>
 </template>
-
 <script>
+import { ResumeApi, UserApi } from "@/api";
+import { useAppStore } from "@/store";
+import defaultAvatar from "@/assets/default-avatar.png";
 export default {
-    data() {
-        return {
-            team: [
-                {
-                    key: 0,
-                    name: "Lai Peichao",
-                    width: 120,
-                    show: true,
-                    disabled: false,
-                },
-            ],
-        };
-    },
+  name: "TeamView",
+  data() { return { theme: "light", gradient: "linear-gradient(120deg,#a36cda,#dc7bc9)", resumes: [], selected: null, editorContent: null, editing: false, loading: false, avatarCache: {} }; },
+  mounted() { this.loadResumes(); },
+  methods: {
+    local(text, params) { return useAppStore().local(text, params); },
+    async loadResumes() { this.loading = true; try { const result = await ResumeApi.list(); this.resumes = result.code === 200 ? result.data || [] : []; if (this.resumes.length) { this.selectResume(this.selected && this.resumes.find((item) => item.id === this.selected.id) || this.resumes[0]); await this.loadAvatars(); } } finally { this.loading = false; } },
+    async loadAvatars() { await Promise.all(this.resumes.filter((item) => item.userid).map(async (item) => { try { const result = await UserApi.userAvatar(item.userid); if (result.code === 200 && result.data) this.avatarCache[item.userid] = result.data; } catch (_) { /* default avatar remains */ } })); },
+    async createOwnResume() { const result = await UserApi.me(); const user = result.code === 200 ? result.data : { userid: localStorage.getItem("ApiUserId") }; this.selected = { id: null, userid: user.userid, user, introduction: { type: "doc", content: [] } }; this.editorContent = this.selected.introduction; this.editing = true; },
+    selectResume(item) { this.selected = item; this.editorContent = item.introduction; this.editing = false; },
+    isLoggedIn() { return Boolean(localStorage.getItem("ApiToken")); },
+    canEdit(item) { return item.userid === localStorage.getItem("ApiUserId"); },
+    avatarOf(item) { return this.avatarCache[item.userid] || defaultAvatar; },
+    async saveResume(content) { const result = await ResumeApi.save({ id: this.selected.id, userid: this.selected.userid, introduction: content }); if (result.code === 200) { this.selected = result.data; this.editorContent = result.data.introduction; this.editing = false; await this.loadResumes(); this.$barWarning(this.local("Resume saved"), { status: "correct", theme: this.theme }); } else this.$barWarning(result.message || this.local("Save failed"), { status: "error", theme: this.theme }); }
+  }
 };
 </script>
-
-<style lang="scss">
-.team-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: #f5f5f5;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-
-    .team-banner {
-        position: relative;
-        width: 100%;
-        height: 100px;
-        display: flex;
-        align-items: center;
-        z-index: 2;
-
-        .logo {
-            width: auto;
-            height: 50px;
-            margin: 0px 25px;
-            z-index: 2;
-        }
-
-        .team-title {
-            height: 100px;
-            font-size: 24px;
-            font-weight: bold;
-            color: rgba(231, 105, 159, 1);
-            user-select: none;
-            display: flex;
-            align-items: center;
-        }
-    }
-
-    .team-pivot
-    {
-        position: relative;
-        width: 100%;
-        height: auto;
-        padding: 0px 15px;
-        box-sizing: border-box;
-        display: flex;
-        align-items: center;
-        z-index: 2;
-    }
-}
+<style scoped lang="scss">
+.team-page{min-height:100%;padding:110px clamp(22px,5vw,78px) 60px;color:#241b38;font-family:"Segoe UI","Microsoft YaHei",sans-serif}.eyebrow{font-size:11px;letter-spacing:.2em;color:#ae65bb;font-weight:800}.team-intro{text-align:center;margin:12px auto 38px;max-width:760px}.team-intro h1{margin:13px 0 8px;font-size:clamp(34px,5vw,62px);line-height:1.05}.team-intro p{margin:0;color:#766d87;line-height:1.7}.team-body{max-width:1180px;margin:0 auto}.member-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:18px}.member-card{display:flex;flex-direction:column;align-items:center;gap:8px;padding:26px 18px;border:1px solid rgba(255,255,255,.96);border-radius:22px;background:rgba(255,255,255,.68);box-shadow:0 18px 50px rgba(116,77,164,.09);color:#2c2242;cursor:pointer;transition:transform .2s,box-shadow .2s}.member-card:hover,.member-card.active{transform:translateY(-4px);box-shadow:0 22px 55px rgba(116,77,164,.18)}.member-card strong{font-size:17px}.member-card small,.member-card span{color:#8a7d98;font-size:12px}.member-card span{color:#a56bd1}.resume-shell{margin-top:28px;padding:30px;border:1px solid rgba(255,255,255,.95);border-radius:26px;background:rgba(255,255,255,.74);box-shadow:0 24px 70px rgba(116,77,164,.12)}.resume-heading{display:flex;justify-content:space-between;align-items:center;gap:20px;padding-bottom:22px;border-bottom:1px solid #eee7f6}.resume-heading h2{margin:8px 0 5px;font-size:30px}.resume-heading p{margin:0;color:#82788f}.resume-card,.editor-card{min-height:380px;margin-top:24px}.editor-card{padding:8px;border:1px solid #eadcf4;border-radius:17px;background:rgba(255,255,255,.62)}.editor-hint{padding:10px 14px;color:#978ba3;font-size:12px}.empty-state{display:grid;justify-items:center;gap:14px;padding:90px 20px;border:1px dashed #d8c5e7;border-radius:22px;color:#8c7e99}.empty-state strong{font-size:20px;color:#4a3b5f}.empty-state span{font-size:13px}@media(max-width:720px){.resume-shell{padding:20px}.resume-heading{align-items:flex-start;flex-direction:column}.resume-heading h2{font-size:25px}}
 </style>

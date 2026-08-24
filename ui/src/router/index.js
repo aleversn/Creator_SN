@@ -1,24 +1,22 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import tool from "./tools";
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
-      name: "Home",
-      component: tool.AsyncLoad(() => import("@/views/home/index.vue")),
-      meta: { title: "创造者官网" }
+      redirect: "/home"
     },
     {
-      path: "/team",
-      name: "Team",
-      component: tool.AsyncLoad(() => import("@/views/team/index.vue")),
-      children: [{
-        path: "",
-        name: "lpc",
-        component: tool.AsyncLoad(() => import("@/views/team/cv/lpc.vue"))
-      }]
+      path: "/home",
+      name: "Home",
+      component: tool.AsyncLoad(() => import("@/views/home/index.vue")),
+      meta: { title: "创造者官网" },
+      children: [
+        { path: "", name: "HomeLanding", component: tool.AsyncLoad(() => import("@/views/home/HomeLanding.vue")), meta: { title: "创造者官网" } },
+        { path: "team", name: "Team", component: tool.AsyncLoad(() => import("@/views/team/index.vue")), meta: { title: "团队 · Creator SN" } }
+      ]
     },
     {
       path: "/dev",
@@ -46,7 +44,8 @@ const router = createRouter({
       meta: { requiresAuth: true, requiresAdmin: true, title: "用户管理 · Creator SN" },
       children: [
         { path: "", redirect: "/admin/users" },
-        { path: "users", name: "AdminUsers", component: tool.AsyncLoad(() => import("@/views/admin/AdminUsersView.vue")) }
+        { path: "users", name: "AdminUsers", component: tool.AsyncLoad(() => import("@/views/admin/AdminUsersView.vue")) },
+        { path: "resumes", name: "AdminResumes", component: tool.AsyncLoad(() => import("@/views/admin/AdminResumesView.vue")) }
       ]
     }
   ]
@@ -57,7 +56,7 @@ router.beforeEach((to) => {
     return { path: "/login", query: { return_url: to.fullPath } };
   }
   if (to.meta.requiresAdmin && !String(localStorage.getItem("ApiUserRole") || "").split(",").includes("admin")) {
-    return { path: "/", query: { denied: "admin" } };
+    return { path: "/home", query: { denied: "admin" } };
   }
   if (to.meta.title) document.title = to.meta.title;
   return true;

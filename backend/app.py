@@ -9,6 +9,7 @@ from tortoise.contrib.fastapi import register_tortoise
 
 from api.controllers.member import router as member_router
 from api.controllers.product import router as product_router
+from api.controllers.resume import router as resume_router
 from api.controllers.user import router as user_router
 from api.models.body import response_body
 from api.models.db_backup import create_monthly_db_backup
@@ -68,6 +69,7 @@ async def shutdown():
 app.include_router(user_router)
 app.include_router(member_router)
 app.include_router(product_router)
+app.include_router(resume_router)
 
 
 @app.get('/', operation_id='Home')

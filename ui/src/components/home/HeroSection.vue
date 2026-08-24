@@ -63,6 +63,7 @@ const buttonGradient = ["#9563df", "#b66de3", "#d777d4", "#ed8ebf", "#ffc0a8"];
 	display: grid;
 	grid-template-columns: 0.9fr 1.1fr;
 	align-items: center;
+	padding-top: 86px;
 	min-height: 660px;
 }
 .hero-copy {

@@ -42,6 +42,12 @@ class UserSecurityInfo(BaseModel):
     confirm_pwd: str
 
 
+class ResumeInfo(BaseModel):
+    id: Optional[str] = None
+    userid: Optional[str] = None
+    introduction: Union[dict, list, str, None] = None
+
+
 class Major(BaseModel):
     id: str = None
     name: str = None

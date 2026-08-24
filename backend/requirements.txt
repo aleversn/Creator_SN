@@ -1,0 +1,6 @@
+fastapi>=0.128.0
+uvicorn[standard]
+tortoise-orm
+pyjwt
+python-multipart
+Pillow

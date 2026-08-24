@@ -1,7 +1,24 @@
-version: '3'
 services:
-  web:
-    build: .
+  ui:
+    build:
+      context: ./ui
     ports:
       - "60081:80"
-    restart: always
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "60031:8000"
+    environment:
+      PYTHONPATH: /app
+    volumes:
+      - ./backend/db:/app/db
+      - ./backend/backup:/app/backup
+      - ./backend/member_cv:/app/member_cv
+      - ./backend/products:/app/products
+      - ./backend/user:/app/user
+    restart: unless-stopped

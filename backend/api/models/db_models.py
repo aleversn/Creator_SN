@@ -1,0 +1,82 @@
+from tortoise import fields, models
+
+
+class BaseDBModel(models.Model):
+    class Meta:
+        abstract = True
+
+
+class UserDBModel(BaseDBModel):
+    id = fields.IntField(pk=True)
+    userid = fields.CharField(max_length=255, unique=True)
+    name = fields.CharField(max_length=255, null=True)
+    pwd = fields.CharField(max_length=255)
+    avatar = fields.TextField(null=True)
+    email = fields.CharField(max_length=255, null=True)
+    phone = fields.CharField(max_length=64, null=True)
+    gender = fields.CharField(max_length=32, null=True)
+    invite_code = fields.CharField(max_length=255, null=True)
+    role = fields.CharField(max_length=255, null=True)
+    apply_time = fields.CharField(max_length=255, null=True)
+    last_login = fields.CharField(max_length=255, null=True)
+
+
+class MemberDBModel(BaseDBModel):
+    id = fields.CharField(max_length=64, pk=True)
+    name = fields.CharField(max_length=255)
+    grade = fields.CharField(max_length=255)
+    session = fields.CharField(max_length=255)
+    major = fields.CharField(max_length=255)
+    title = fields.CharField(max_length=255)
+    toWhere = fields.CharField(max_length=255)
+    postAddress = fields.CharField(max_length=255)
+    educations = fields.JSONField()
+    teams = fields.JSONField()
+    groups = fields.JSONField()
+    introduction = fields.TextField(null=True)
+    photo = fields.TextField(null=True)
+    userid = fields.CharField(max_length=255, unique=True, null=True)
+    awards = fields.JSONField()
+    email = fields.CharField(max_length=255)
+    mobile = fields.CharField(max_length=64)
+    external = fields.TextField(null=True)
+
+
+class ProductDBModel(BaseDBModel):
+    id = fields.CharField(max_length=64, pk=True)
+    tool_name = fields.CharField(max_length=255)
+    tool_type = fields.CharField(max_length=255, null=True)
+    organization = fields.CharField(max_length=255, null=True)
+    homepage_url = fields.TextField(null=True)
+    introduction = fields.TextField(null=True)
+    audit_status = fields.CharField(max_length=64, null=True)
+    publish_time = fields.CharField(max_length=255, null=True)
+    update_time = fields.CharField(max_length=255, null=True)
+    publisher_id = fields.CharField(max_length=255, null=True)
+
+
+class ProductReviewDBModel(BaseDBModel):
+    id = fields.CharField(max_length=64, pk=True)
+    product = fields.ForeignKeyField('models.ProductDBModel', related_name='reviews', on_delete=fields.CASCADE)
+    review = fields.TextField()
+    reviewer_id = fields.CharField(max_length=255, null=True)
+    review_time = fields.CharField(max_length=255, null=True)
+    update_time = fields.CharField(max_length=255, null=True)
+
+
+class ProductAttributeDBModel(BaseDBModel):
+    id = fields.CharField(max_length=64, pk=True)
+    name = fields.CharField(max_length=255, unique=True)
+    attribute_type = fields.CharField(max_length=64)
+    create_time = fields.CharField(max_length=255, null=True)
+    update_time = fields.CharField(max_length=255, null=True)
+
+
+class ProductAttributeValueDBModel(BaseDBModel):
+    id = fields.CharField(max_length=64, pk=True)
+    product = fields.ForeignKeyField('models.ProductDBModel', related_name='attribute_values', on_delete=fields.CASCADE)
+    attribute = fields.ForeignKeyField('models.ProductAttributeDBModel', related_name='values', on_delete=fields.CASCADE)
+    value = fields.TextField(null=True)
+    publisher_id = fields.CharField(max_length=255, null=True)
+    publish_time = fields.CharField(max_length=255, null=True)
+    update_time = fields.CharField(max_length=255, null=True)

@@ -1,24 +1,17 @@
-# creatorsn
+# Creator SN
 
-## Project setup
-```
-yarn install
-```
+The repository is now split into two deployable parts:
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+- `ui/`: the existing Vue/Vite frontend and its Nginx image configuration.
+- `backend/`: a FastAPI/Tortoise backend based on `DAIR_Portal_BE`.
 
-### Compiles and minifies for production
-```
-yarn build
+The first backend slice contains the core application, database initialization and backup, user management, and member/product resource management. Other management domains remain unregistered for now.
+
+Run both services with:
+
+```powershell
+docker compose up --build
 ```
 
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- Frontend: `http://localhost:60081`
+- Backend: `http://localhost:60031`

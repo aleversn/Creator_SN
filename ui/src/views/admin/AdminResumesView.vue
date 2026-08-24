@@ -118,13 +118,12 @@
 <script>
 import { ResumeApi, UserApi } from "@/api";
 import { useAppStore } from "@/store";
+import { mapState } from "pinia";
+import { useTheme } from "@/stores/useTheme";
 export default {
 	name: "AdminResumesView",
 	data() {
 		return {
-			theme: "light",
-			color: "#a56bd1",
-			gradient: "linear-gradient(120deg,#a36cda,#dc7bc9)",
 			resumes: [],
 			users: [],
 			visible: false,
@@ -149,6 +148,7 @@ export default {
 		this.loadUsers();
 	},
 	computed: {
+		...mapState(useTheme, ["theme", "color", "gradient"]),
 		localizedHead() {
 			return this.head.map((item) => ({
 				...item,

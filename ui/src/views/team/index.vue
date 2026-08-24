@@ -129,13 +129,13 @@
 <script>
 import { ResumeApi, UserApi } from "@/api";
 import { useAppStore } from "@/store";
+import { mapState } from "pinia";
+import { useTheme } from "@/stores/useTheme";
 import defaultAvatar from "@/assets/default-avatar.png";
 export default {
 	name: "TeamView",
 	data() {
 		return {
-			theme: "light",
-			gradient: "linear-gradient(120deg,#a36cda,#dc7bc9)",
 			resumes: [],
 			selected: null,
 			editorContent: null,
@@ -143,6 +143,9 @@ export default {
 			loading: false,
 			avatarCache: {},
 		};
+	},
+	computed: {
+		...mapState(useTheme, ["theme", "gradient"]),
 	},
 	mounted() {
 		this.loadResumes();

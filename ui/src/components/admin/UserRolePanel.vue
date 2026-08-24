@@ -54,6 +54,8 @@
 <script>
 import { UserApi } from "@/api";
 import { useAppStore } from "@/store";
+import { mapState } from "pinia";
+import { useTheme } from "@/stores/useTheme";
 export default {
 	name: "UserRolePanel",
 	props: {
@@ -64,14 +66,12 @@ export default {
 	emits: ["update:modelValue", "updated"],
 	data() {
 		return {
-			theme: "light",
-			color: "#a56bd1",
-			gradient: "linear-gradient(120deg,#a36cda,#dc7bc9)",
 			busy: false,
 			roleStates: {},
 		};
 	},
 	computed: {
+		...mapState(useTheme, ["theme", "color", "gradient"]),
 		visible: {
 			get() {
 				return this.modelValue;

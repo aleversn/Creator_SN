@@ -91,9 +91,16 @@
 						}}</fv-button
 					>
 				</div>
-				<div v-if="editing" class="editor-card">
+				<div
+					v-if="editing"
+					class="editor-card"
+					@paste.capture="handlePowerEditorPaste"
+					@drop.capture="handlePowerEditorDrop"
+				>
 					<power-editor
+						ref="editor"
 						:model-value="editorValue(editorContent)"
+						:img-interceptor="resumeImageInterceptor"
 						:toolbar-height="70"
 						editor-background="transparent"
 						editor-out-side-background="transparent"
@@ -132,6 +139,11 @@ import { useAppStore } from "@/store";
 import { mapState } from "pinia";
 import { useTheme } from "@/stores/useTheme";
 import defaultAvatar from "@/assets/default-avatar.png";
+import {
+	createResumeImageInterceptor,
+	handlePowerEditorImageDrop,
+	handlePowerEditorImagePaste,
+} from "@/utils/powerEditorImageInterceptor";
 export default {
 	name: "TeamView",
 	data() {
@@ -151,6 +163,26 @@ export default {
 		this.loadResumes();
 	},
 	methods: {
+		handlePowerEditorPaste(event) {
+			return handlePowerEditorImagePaste(
+				event,
+				() => this.$refs.editor,
+				() =>
+					this.$barWarning(this.local("Image upload failed"), {
+						status: "warning",
+					}),
+			);
+		},
+		handlePowerEditorDrop(event) {
+			return handlePowerEditorImageDrop(
+				event,
+				() => this.$refs.editor,
+				() =>
+					this.$barWarning(this.local("Image upload failed"), {
+						status: "warning",
+					}),
+			);
+		},
 		local(text, params) {
 			return useAppStore().local(text, params);
 		},
@@ -230,6 +262,12 @@ export default {
 		},
 		editorValue(content) {
 			return this.normalizeContent(content);
+		},
+		resumeImageInterceptor(payload) {
+			return createResumeImageInterceptor({
+				getResumeId: () => this.selected?.id,
+				local: this.local,
+			})(payload);
 		},
 		async saveResume(content) {
 			const result = await ResumeApi.save({

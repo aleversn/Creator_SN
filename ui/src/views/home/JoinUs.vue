@@ -175,6 +175,7 @@ const themeStore = useTheme();
 const local = (text, params) => appStore.local(text, params);
 const gradient = themeStore.gradient;
 const heroGradient = themeStore.heroGradient;
+const buttonGradient = ["#9563df", "#b66de3", "#d777d4", "#ed8ebf", "#ffc0a8"];
 const emailHref = `mailto:lpcsn@qq.com?subject=${encodeURIComponent("加入 Creator SN")}&body=${encodeURIComponent("你好，Creator SN：\n\n我想了解并参与加入我们。\n\n我的介绍：\n感兴趣的方向：\n希望参与的项目或贡献：")}`;
 const toEmail = () => {
 	window.open(emailHref, "_blank");

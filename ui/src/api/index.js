@@ -29,7 +29,18 @@ export const ResumeApi = {
   list: () => request("get", "/resume/list"),
   mine: () => request("get", "/resume/mine"),
   save: (payload) => request("post", "/resume/save", payload),
-  remove: (id) => request("delete", `/resume/${id}`)
+  remove: (id) => request("delete", `/resume/${id}`),
+  uploadImage: (id, file, onUploadProgress) => {
+    const form = new FormData();
+    form.append("id", id);
+    form.append("image", file, "image.jpg");
+    return request("post", "/resume/upload_image", form, {
+      headers: { "Content-Type": "multipart/form-data" },
+      onUploadProgress,
+    });
+  },
+  imageUrl: (id, imageName) =>
+    `${client.defaults.baseURL}/resume/image/${encodeURIComponent(id)}/${encodeURIComponent(imageName)}`
 };
 
 export const ProjectApi = {

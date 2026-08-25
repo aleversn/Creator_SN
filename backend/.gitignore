@@ -4,4 +4,6 @@ db/*.sqlite3
 backup/
 member_cv/*
 projects/*
+resume_images/*
+!resume_images/.gitkeep
 user/*

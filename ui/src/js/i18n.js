@@ -196,5 +196,7 @@ export default {
     "Save resume": { en: "Save resume", cn: "保存简历" },
     "Delete this resume?": { en: "Delete this resume?", cn: "确定删除这份简历吗？" },
     "Create your resume to join the team.": { en: "Create your resume to join the team.", cn: "创建简历后即可加入团队展示。" },
+    "Uploading image…": { en: "Uploading image…", cn: "图片上传中…" },
+    "Image upload failed": { en: "Image upload failed", cn: "图片上传失败" },
     "Create my resume": { en: "Create my resume", cn: "创建我的简历" }
 };

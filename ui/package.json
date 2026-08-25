@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@creatorsn/powereditor3": "^0.4.7",
-    "@creatorsn/vfluent3": "^0.3.90",
+    "@creatorsn/vfluent3": "^0.3.95",
     "axios": "^1.7.9",
     "axios-swagger-helper": "^0.0.58",
     "core-js": "^3.6.4",

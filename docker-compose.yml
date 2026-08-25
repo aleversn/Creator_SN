@@ -20,5 +20,7 @@ services:
       - ./backend/backup:/app/backup
       - ./backend/member_cv:/app/member_cv
       - ./backend/products:/app/products
+      - ./backend/projects:/app/projects
+      - ./backend/resume_images:/app/resume_images
       - ./backend/user:/app/user
     restart: unless-stopped

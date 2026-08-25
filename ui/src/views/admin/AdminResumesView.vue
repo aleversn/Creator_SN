@@ -70,6 +70,7 @@
 			:form="form"
 			:user-option="userOption"
 			:user-options="userOptions"
+			:img-interceptor="resumeImageInterceptor"
 			@update:user-option="userOption = $event"
 			@choose-user="selectUser"
 			@save-content="saveContent"
@@ -83,6 +84,7 @@ import ResumeEditorPanel from "@/components/admin/ResumeEditorPanel.vue";
 import { useAppStore } from "@/store";
 import { mapState } from "pinia";
 import { useTheme } from "@/stores/useTheme";
+import { createResumeImageInterceptor } from "@/utils/powerEditorImageInterceptor";
 export default {
 	name: "AdminResumesView",
 	components: { ResumeEditorPanel },
@@ -189,6 +191,12 @@ export default {
 		},
 		editorValue(content) {
 			return this.normalizeContent(content);
+		},
+		resumeImageInterceptor(payload) {
+			return createResumeImageInterceptor({
+				getResumeId: () => this.form.id,
+				local: this.local,
+			})(payload);
 		},
 		saveContent(content) {
 			this.form.introduction = content;

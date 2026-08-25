@@ -11,7 +11,11 @@
 		:is-footer="true"
 	>
 		<template #container
-			><div class="editor-panel">
+			><div
+				class="editor-panel"
+				@paste.capture="handlePowerEditorPaste"
+				@drop.capture="handlePowerEditorDrop"
+			>
 				<span class="bind-user-label"
 					>{{ local("Bind user")
 					}}<fv-combobox
@@ -28,7 +32,9 @@
 						style="z-index: 9"
 						@choose-item="$emit('choose-user', $event)" /></span
 				><power-editor
+					ref="editor"
 					:model-value="editorValue(form.introduction)"
+					:img-interceptor="imgInterceptor"
 					editor-background="transparent"
 					editor-out-side-background="transparent"
 					@save-json="$emit('save-content', $event)"
@@ -68,6 +74,10 @@
 </template>
 <script>
 import { useAppStore } from "@/store";
+import {
+	handlePowerEditorImageDrop,
+	handlePowerEditorImagePaste,
+} from "@/utils/powerEditorImageInterceptor";
 
 export default {
 	name: "ResumeEditorPanel",
@@ -80,6 +90,7 @@ export default {
 		form: { type: Object, required: true },
 		userOption: { type: Object, required: true },
 		userOptions: { type: Array, default: () => [] },
+		imgInterceptor: { type: Function, default: null },
 	},
 	emits: [
 		"update:modelValue",
@@ -107,6 +118,20 @@ export default {
 		},
 	},
 	methods: {
+		handlePowerEditorPaste(event) {
+			return handlePowerEditorImagePaste(
+				event,
+				() => this.$refs.editor,
+				() => this.$emit("image-error"),
+			);
+		},
+		handlePowerEditorDrop(event) {
+			return handlePowerEditorImageDrop(
+				event,
+				() => this.$refs.editor,
+				() => this.$emit("image-error"),
+			);
+		},
 		local(text, params) {
 			return useAppStore().local(text, params);
 		},

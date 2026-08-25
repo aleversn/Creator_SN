@@ -231,6 +231,7 @@ const router = useRouter(),
 	themeStore = useTheme(),
 	heroGradient = computed(() => themeStore.heroGradient);
 const local = useAppStore().local;
+const buttonGradient = ["#9563df", "#b66de3", "#d777d4", "#ed8ebf", "#ffc0a8"];
 const genderOptions = computed(() => [
 	{ key: "", value: "", text: local("Not set") },
 	{ key: "male", value: "male", text: local("Male") },

@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useAppStore } from "@/store";
 import { useTheme } from "@/stores/useTheme";
 

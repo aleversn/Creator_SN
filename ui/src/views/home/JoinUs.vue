@@ -65,10 +65,9 @@
 			</div>
 			<div class="join-cards">
 				<article class="soft-surface join-card">
-					<span
-						class="card-icon ms-Icon ms-Icon--Design"
-						aria-hidden="true"
-					></span>
+					<div class="card-icon-block">
+						<img class="card-icon" :src="imgs.webIcon" alt="" />
+					</div>
 					<h3>{{ local("Open-source frontend") }}</h3>
 					<p>
 						{{
@@ -79,10 +78,9 @@
 					</p>
 				</article>
 				<article class="soft-surface join-card">
-					<span
-						class="card-icon ms-Icon ms-Icon--Robot"
-						aria-hidden="true"
-					></span>
+					<div class="card-icon-block">
+						<img class="card-icon" :src="imgs.agentIcon" alt="" />
+					</div>
 					<h3>{{ local("Agent tools") }}</h3>
 					<p>
 						{{
@@ -93,10 +91,9 @@
 					</p>
 				</article>
 				<article class="soft-surface join-card">
-					<span
-						class="card-icon ms-Icon ms-Icon--Lightbulb"
-						aria-hidden="true"
-					></span>
+					<div class="card-icon-block">
+						<img class="card-icon" :src="imgs.designIcon" alt="" />
+					</div>
 					<h3>{{ local("AI-based design aesthetics") }}</h3>
 					<p>
 						{{
@@ -166,8 +163,12 @@
 </template>
 
 <script setup>
+import { ref } from "vue";
 import { useAppStore } from "@/store";
 import { useTheme } from "@/stores/useTheme";
+import designIcon from "@/assets/home/design.png";
+import agentIcon from "@/assets/home/agent.png";
+import webIcon from "@/assets/home/web.png";
 
 const appStore = useAppStore();
 const themeStore = useTheme();
@@ -178,6 +179,12 @@ const emailHref = `mailto:lpcsn@qq.com?subject=${encodeURIComponent("加入 Crea
 const toEmail = () => {
 	window.open(emailHref, "_blank");
 };
+
+const imgs = ref({
+	designIcon,
+	agentIcon,
+	webIcon,
+});
 </script>
 
 <style scoped lang="scss">
@@ -239,32 +246,10 @@ const toEmail = () => {
 	position: relative;
 	min-height: 510px;
 	overflow: hidden;
-	border: 9px solid rgba(255, 255, 255, 0.72);
+	border: 6px solid rgba(255, 255, 255, 0.72);
 	border-radius: 34px;
 	background: #283b5a;
 	box-shadow: 0 28px 70px rgba(75, 51, 126, 0.22);
-	-webkit-mask-image: radial-gradient(
-		ellipse at center,
-		#000 66%,
-		rgba(0, 0, 0, 0.94) 82%,
-		transparent 100%
-	);
-	mask-image: radial-gradient(
-		ellipse at center,
-		#000 66%,
-		rgba(0, 0, 0, 0.94) 82%,
-		transparent 100%
-	);
-}
-.join-visual::before {
-	position: absolute;
-	inset: 14px;
-	z-index: -1;
-	border-radius: 34px;
-	background: rgba(188, 135, 232, 0.32);
-	box-shadow: 0 0 32px 18px rgba(197, 146, 231, 0.28);
-	content: "";
-	filter: blur(18px);
 }
 .join-visual::after {
 	position: absolute;
@@ -341,16 +326,25 @@ const toEmail = () => {
 	padding: 28px;
 	border-radius: 22px;
 }
-.card-icon {
-	display: grid;
-	width: 44px;
-	height: 44px;
+.card-icon-block {
+	@include HcenterVcenter;
+
+	width: 45px;
+	height: 45px;
 	place-items: center;
 	border-radius: 14px;
-	color: #a56bd1;
-	background: #f1e6ff;
-	font-size: 20px;
+	background: rgba(245, 245, 245, 0.8);
+
+	.card-icon {
+		display: grid;
+		width: 30px;
+		height: 30px;
+		object-fit: contain;
+
+		font-size: 20px;
+	}
 }
+
 .join-card h3,
 .value-item h3 {
 	margin: 25px 0 9px;

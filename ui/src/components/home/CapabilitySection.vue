@@ -19,11 +19,12 @@
 				class="capability-card soft-surface"
 			>
 				<div class="capability-orb" :class="item.tone">
-					<span
-						class="ms-Icon"
-						:class="item.icon"
-						aria-hidden="true"
-					></span>
+					<img
+						draggable="false"
+						class="fluent-icon"
+						:src="item.img"
+						alt=""
+					/>
 				</div>
 				<div>
 					<h3>{{ local(item.title) }}</h3>
@@ -46,6 +47,9 @@
 
 <script setup>
 import { useAppStore } from "@/store";
+import openImg from "@/assets/home/open.png";
+import aiImg from "@/assets/home/ai.png";
+import agentImg from "@/assets/home/agent.png";
 
 const appStore = useAppStore();
 const local = (text) => appStore.local(text);
@@ -55,7 +59,7 @@ const capabilities = [
 		title: "Open source",
 		description:
 			"Reliable libraries and tools to build on, improve, and share with the world.",
-		icon: "ms-Icon--Code",
+		img: openImg,
 		tone: "violet",
 		href: "https://github.com/Creator-SN",
 	},
@@ -63,14 +67,14 @@ const capabilities = [
 		title: "AI products",
 		description:
 			"Intelligent features and apps that solve real problems simply.",
-		icon: "ms-Icon--Lightbulb",
+		img: aiImg,
 		tone: "pink",
 		href: "https://github.com/Creator-SN",
 	},
 	{
 		title: "Agent systems",
 		description: "Autonomous agents that collaborate and get things done.",
-		icon: "ms-Icon--Processing",
+		img: agentImg,
 		tone: "orange",
 		href: "https://github.com/Creator-SN",
 	},
@@ -117,15 +121,12 @@ const capabilities = [
 	box-shadow:
 		inset 0 0 0 10px rgba(255, 255, 255, 0.35),
 		0 10px 30px rgba(156, 102, 196, 0.18);
-}
-.capability-orb.violet {
-	background: #ad79e7;
-}
-.capability-orb.pink {
-	background: #e88cce;
-}
-.capability-orb.orange {
-	background: #f3ae82;
+
+	.fluent-icon {
+		width: 40px;
+		height: 40px;
+		object-fit: contain;
+	}
 }
 .capability-card h3 {
 	margin: 0 0 8px;

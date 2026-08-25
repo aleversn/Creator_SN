@@ -8,7 +8,7 @@
 		>
 		<nav aria-label="主导航">
 			<router-link to="/home/team">{{ local("Team") }}</router-link
-			><a href="#about">{{ local("About") }}</a
+			><router-link to="/home/join">{{ local("About") }}</router-link
 			><a
 				href="https://github.com/Creator-SN"
 				target="_blank"
@@ -26,8 +26,15 @@
 			>
 				{{ appStore.language === "cn" ? "EN" : "中文" }}
 			</button>
-			<router-link class="account-link" :to="userStore.isLoggedIn ? '/profile' : '/login'">
-				{{ userStore.isLoggedIn ? (userStore.info.name || userStore.info.userid) : "登录" }}
+			<router-link
+				class="account-link"
+				:to="userStore.isLoggedIn ? '/profile' : '/login'"
+			>
+				{{
+					userStore.isLoggedIn
+						? userStore.info.name || userStore.info.userid
+						: "登录"
+				}}
 			</router-link>
 		</nav>
 	</header>

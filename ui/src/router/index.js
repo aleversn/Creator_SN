@@ -16,6 +16,7 @@ const router = createRouter({
       children: [
         { path: "", name: "HomeLanding", component: tool.AsyncLoad(() => import("@/views/home/HomeLanding.vue")), meta: { title: "创造者官网" } },
         { path: "projects", name: "Projects", component: tool.AsyncLoad(() => import("@/views/home/AllProjects.vue")), meta: { title: "项目 · Creator SN" } },
+        { path: "join", name: "Join", component: tool.AsyncLoad(() => import("@/views/home/JoinUs.vue")), meta: { title: "加入我们 · Creator SN" } },
         { path: "team", name: "Team", component: tool.AsyncLoad(() => import("@/views/team/index.vue")), meta: { title: "团队 · Creator SN" } }
       ]
     },

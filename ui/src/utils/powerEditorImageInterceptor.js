@@ -21,9 +21,9 @@ export function createResumeImageInterceptor({ getResumeId, local }) {
 		const resumeId = getResumeId();
 		if (!resumeId) return;
 
-		const originalUrl = interceptImage("");
+		const source = getImage();
+		let originalUrl = source;
 		try {
-			const source = getImage();
 			let blob = null;
 			if (source?.startsWith("data:image")) {
 				blob = base64ToBlob(source);
@@ -34,6 +34,7 @@ export function createResumeImageInterceptor({ getResumeId, local }) {
 				blob = await (await fetch(source)).blob();
 			}
 			if (!blob) return;
+			originalUrl = interceptImage("");
 
 			showStatus(true);
 			const result = await ResumeApi.uploadImage(

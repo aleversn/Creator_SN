@@ -333,7 +333,7 @@ export default {
     },
     "Name": {
         "en": "Name",
-        "cn": "姓名"
+        "cn": "名称"
     },
     "Gender": {
         "en": "Gender",

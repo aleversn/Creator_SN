@@ -8,7 +8,7 @@
 				:options="navList"
 				v-model:expand="isExpand"
 				foreground="#a56bd1"
-                background="transparent"
+				background="transparent"
 				:flyout-display="1368"
 				:mobile-display="1024"
 				class="navigation-view"
@@ -32,23 +32,23 @@ export default {
 			navList: [
 				{
 					key: 0,
-					name: "User Management",
+					name: () => this.local("User Management"),
 					icon: "GuestUser",
 					route: "/admin/users",
 				},
 				{
 					key: 1,
-					name: "Resume Management",
+					name: () => this.local("Resume Management"),
 					icon: "ReadingMode",
 					route: "/admin/resumes",
 				},
 				{
 					key: 2,
-					name: "Project Management",
+					name: () => this.local("Project Management"),
 					icon: "ProductList",
 					route: "/admin/projects",
 				},
-				{ key: -1, name: "Home", icon: "Home", route: "/" },
+				{ key: -1, name: () => this.local("Home"), icon: "Home", route: "/" },
 			],
 		};
 	},

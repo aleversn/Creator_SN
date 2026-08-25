@@ -162,6 +162,17 @@ export default {
 	mounted() {
 		this.loadResumes();
 	},
+	watch: {
+		"$route.query.email"() {
+			if (!this.resumes.length) return;
+			const email = String(this.$route.query.email || "").trim().toLowerCase();
+			const target =
+				this.resumes.find(
+					(item) => this.resumeEmail(item).toLowerCase() === email,
+				) || this.resumes[0];
+			this.selectResume(target, false);
+		},
+	},
 	methods: {
 		handlePowerEditorPaste(event) {
 			return handlePowerEditorImagePaste(
@@ -192,12 +203,16 @@ export default {
 				const result = await ResumeApi.list();
 				this.resumes = result.code === 200 ? result.data || [] : [];
 				if (this.resumes.length) {
+					const routeResume = this.resumes.find(
+						(item) =>
+							this.resumeEmail(item).toLowerCase() ===
+							String(this.$route.query.email || "")
+								.trim()
+								.toLowerCase(),
+					);
 					this.selectResume(
-						(this.selected &&
-							this.resumes.find(
-								(item) => item.id === this.selected.id,
-							)) ||
-							this.resumes[0],
+						routeResume || this.resumes[0],
+						false,
 					);
 					await this.loadAvatars();
 				}
@@ -237,10 +252,19 @@ export default {
 			this.editorContent = this.selected.introduction;
 			this.editing = true;
 		},
-		selectResume(item) {
+		selectResume(item, syncRoute = true) {
 			this.selected = item;
 			this.editorContent = this.normalizeContent(item.introduction);
 			this.editing = false;
+			const email = this.resumeEmail(item);
+			if (syncRoute && String(this.$route.query.email || "") !== email) {
+				this.$router.replace({
+					query: { ...this.$route.query, email: email || undefined },
+				});
+			}
+		},
+		resumeEmail(item) {
+			return item?.user?.email || item?.email || "";
 		},
 		isLoggedIn() {
 			return Boolean(localStorage.getItem("ApiToken"));
@@ -279,6 +303,12 @@ export default {
 				this.selected = result.data;
 				this.editorContent = result.data.introduction;
 				this.editing = false;
+				this.$router.replace({
+					query: {
+						...this.$route.query,
+						email: this.resumeEmail(result.data) || undefined,
+					},
+				});
 				await this.loadResumes();
 				this.$barWarning(this.local("Resume saved"), {
 					status: "correct",

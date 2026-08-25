@@ -17,6 +17,8 @@ CHUNK_SIZE = 100
 
 def load_i18n_map(raw_text: str) -> Dict[str, dict]:
     text = raw_text.replace("export default", "", 1).strip()
+    if text.endswith(";"):
+        text = text[:-1].rstrip()
     try:
         return json.loads(text)
     except json.JSONDecodeError:
@@ -24,7 +26,8 @@ def load_i18n_map(raw_text: str) -> Dict[str, dict]:
 const fs = require('fs');
 const vm = require('vm');
 const path = process.argv[1];
-const src = fs.readFileSync(path, 'utf8').replace('export default', '').trim();
+let src = fs.readFileSync(path, 'utf8').replace('export default', '').trim();
+if (src.endsWith(';')) src = src.slice(0, -1).trim();
 const obj = vm.runInNewContext('(' + src + ')', {});
 process.stdout.write(JSON.stringify(obj));
 """

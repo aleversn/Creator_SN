@@ -32,4 +32,18 @@ export const ResumeApi = {
   remove: (id) => request("delete", `/resume/${id}`)
 };
 
+export const ProjectApi = {
+  featured: () => request("get", "/projects/featured"),
+  list: (search, offset = 0, limit = 12) => request("get", "/projects/list", undefined, { params: { search, offset, limit } }),
+  adminList: (search, offset = 0, limit = 99999) => request("get", "/projects/admin/list", undefined, { params: { search, offset, limit } }),
+  save: (payload) => request("post", "/projects/update", payload),
+  remove: (id) => request("delete", `/projects/${id}`),
+  uploadIcon: (id, file) => {
+    const form = new FormData();
+    form.append("icon", file);
+    return request("post", `/projects/upload_icon?id=${encodeURIComponent(id)}`, form, { headers: { "Content-Type": "multipart/form-data" } });
+  },
+  iconUrl: (id) => `${client.defaults.baseURL}/projects/icon/${id}`
+};
+
 export { client as axios, User };

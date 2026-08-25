@@ -9,6 +9,7 @@ from tortoise.contrib.fastapi import register_tortoise
 
 from api.controllers.member import router as member_router
 from api.controllers.product import router as product_router
+from api.controllers.project import router as project_router, seed_default_projects
 from api.controllers.resume import router as resume_router
 from api.controllers.user import router as user_router
 from api.models.body import response_body
@@ -55,6 +56,7 @@ async def periodic_db_backup():
 @app.on_event('startup')
 async def startup():
     global backup_task
+    await seed_default_projects()
     backup_task = asyncio.create_task(periodic_db_backup())
 
 
@@ -69,6 +71,7 @@ async def shutdown():
 app.include_router(user_router)
 app.include_router(member_router)
 app.include_router(product_router)
+app.include_router(project_router)
 app.include_router(resume_router)
 
 

@@ -3,5 +3,5 @@ __pycache__/
 db/*.sqlite3
 backup/
 member_cv/*
-products/*
+projects/*
 user/*

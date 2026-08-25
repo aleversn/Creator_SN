@@ -3,16 +3,13 @@
 		<div class="home-shell">
 			<div class="section-heading">
 				<h2 id="projects-title">{{ local("Featured projects") }}</h2>
-				<a
-					href="https://github.com/Creator-SN"
-					target="_blank"
-					rel="noreferrer"
+				<router-link to="/home/projects"
 					>{{ local("View all projects") }}
 					<span
 						class="ms-Icon ms-Icon--ChevronRight"
 						aria-hidden="true"
 					></span
-				></a>
+				></router-link>
 			</div>
 			<div class="project-list">
 				<article
@@ -21,18 +18,19 @@
 					class="project-item"
 				>
 					<div class="project-icon" :class="project.tone">
-						<span
+						<img v-if="project.icon_url" :src="iconUrl(project)" :alt="project.name" />
+						<span v-else
 							class="ms-Icon"
-							:class="project.icon"
+							:class="fallbackIcon(project)"
 							aria-hidden="true"
 						></span>
 					</div>
 					<div>
 						<h3>{{ project.name }}</h3>
-						<p>{{ local(project.description) }}</p>
+						<p>{{ project.info || local(project.description || "") }}</p>
 					</div>
 					<a
-						:href="project.href"
+						:href="project.href || '#'"
 						target="_blank"
 						rel="noreferrer"
 						:aria-label="`查看 ${project.name}`"
@@ -48,12 +46,15 @@
 </template>
 
 <script setup>
+import { onMounted, ref } from "vue";
 import { useAppStore } from "@/store";
+import { ProjectApi } from "@/api";
 
 const appStore = useAppStore();
 const local = (text) => appStore.local(text);
 
-const projects = [
+const projects = ref([]);
+const fallbackProjects = [
 	{
 		name: "Fabulous",
 		description: "Beautiful UI, effortless.",
@@ -83,6 +84,19 @@ const projects = [
 		href: "https://github.com/Creator-SN",
 	},
 ];
+const loading = ref(true);
+onMounted(async () => {
+	try {
+		const result = await ProjectApi.featured();
+		projects.value = result.code === 200 ? result.data || [] : fallbackProjects;
+	} catch (_) {
+		projects.value = fallbackProjects;
+	} finally {
+		loading.value = false;
+	}
+});
+const iconUrl = (project) => project.icon_url?.startsWith("http") ? project.icon_url : ProjectApi.iconUrl(project.id);
+const fallbackIcon = (project) => ({ Fabulous: "ms-Icon--ViewDashboard", MathFX: "ms-Icon--Calculator", VFluent3: "ms-Icon--Design", PowerEditor: "ms-Icon--Edit" }[project.name] || "ms-Icon--ProductList");
 </script>
 
 <style lang="scss">
@@ -150,6 +164,12 @@ const projects = [
 		0 14px 30px rgba(130, 83, 180, 0.16),
 		inset 0 1px 0 rgba(255, 255, 255, 0.98);
 	backdrop-filter: blur(15px);
+}
+.project-icon img {
+	width: 25px;
+	height: 25px;
+	object-fit: contain;
+	border-radius: inherit;
 }
 .project-icon.violet {
 	color: #9b63ee;

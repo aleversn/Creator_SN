@@ -15,6 +15,7 @@ const router = createRouter({
       meta: { title: "创造者官网" },
       children: [
         { path: "", name: "HomeLanding", component: tool.AsyncLoad(() => import("@/views/home/HomeLanding.vue")), meta: { title: "创造者官网" } },
+        { path: "projects", name: "Projects", component: tool.AsyncLoad(() => import("@/views/home/AllProjects.vue")), meta: { title: "项目 · Creator SN" } },
         { path: "team", name: "Team", component: tool.AsyncLoad(() => import("@/views/team/index.vue")), meta: { title: "团队 · Creator SN" } }
       ]
     },
@@ -45,6 +46,7 @@ const router = createRouter({
       children: [
         { path: "", redirect: "/admin/users" },
         { path: "users", name: "AdminUsers", component: tool.AsyncLoad(() => import("@/views/admin/AdminUsersView.vue")) },
+        { path: "projects", name: "AdminProjects", component: tool.AsyncLoad(() => import("@/views/admin/AdminProjectsView.vue")) },
         { path: "resumes", name: "AdminResumes", component: tool.AsyncLoad(() => import("@/views/admin/AdminResumesView.vue")) }
       ]
     }

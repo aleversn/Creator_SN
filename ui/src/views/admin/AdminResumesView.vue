@@ -43,12 +43,16 @@
 				><template #column_4="x"
 					><div class="actions">
 						<fv-button
-							theme="light"
+							icon="Edit"
+							theme="dark"
+							:background="gradient"
 							border-radius="6"
 							@click="openEdit(x.item)"
 							>{{ local("Edit") }}</fv-button
 						><fv-button
-							theme="light"
+							icon="Delete"
+							theme="dark"
+							background="rgba(200, 38, 45, 1)"
 							border-radius="6"
 							@click="remove(x.item)"
 							>{{ local("Delete") }}</fv-button
@@ -57,73 +61,31 @@
 				></fv-details-list
 			>
 		</div>
-		<fv-panel
+		<ResumeEditorPanel
 			v-model="visible"
-			theme="light"
-			:title="editing ? local('Edit resume') : local('Add resume')"
-			width="min(900px, calc(100vw - 32px))"
-			height="min(780px, calc(100vh - 32px))"
-			background="rgba(255,255,255,.96)"
-			:is-central-side="true"
-			:is-acrylic="true"
-			:is-footer="true"
-		>
-			<template #container
-				><div class="editor-panel">
-					<span class="bind-user-label"
-						>{{ local("Bind user")
-						}}<fv-combobox
-							v-model="userOption"
-							class="user-picker"
-							theme="light"
-							:options="userOptions"
-							:placeholder="local('Unbound resume')"
-							background="rgba(255,255,255,.72)"
-							border-color="rgba(241, 222, 252, 0.3)"
-							choosenSliderBackground="rgba(163, 121, 225, 1)"
-							:reveal-border="true"
-							:is-box-shadow="true"
-							style="z-index: 9"
-							@choose-item="selectUser" /></span
-					><power-editor
-						:model-value="editorValue(form.introduction)"
-						editor-background="transparent"
-						editor-out-side-background="transparent"
-						@save-json="saveContent"
-						style="width: 100%"
-					></power-editor>
-					<p class="hint">
-						{{
-							local(
-								"Basic information comes from the bound user's profile.",
-							)
-						}}
-					</p>
-				</div></template
-			>
-			<template #footer
-				><fv-button
-					theme="dark"
-					:background="gradient"
-					border-radius="8"
-					:disabled="saving"
-					style="width: 120px"
-					@click="save"
-					>{{
-						saving ? local("Saving…") : local("Save resume")
-					}}</fv-button
-				></template
-			>
-		</fv-panel>
+			:editing="editing"
+			:saving="saving"
+			:theme="theme"
+			:gradient="gradient"
+			:form="form"
+			:user-option="userOption"
+			:user-options="userOptions"
+			@update:user-option="userOption = $event"
+			@choose-user="selectUser"
+			@save-content="saveContent"
+			@save="save"
+		/>
 	</div>
 </template>
 <script>
 import { ResumeApi, UserApi } from "@/api";
+import ResumeEditorPanel from "@/components/admin/ResumeEditorPanel.vue";
 import { useAppStore } from "@/store";
 import { mapState } from "pinia";
 import { useTheme } from "@/stores/useTheme";
 export default {
 	name: "AdminResumesView",
+	components: { ResumeEditorPanel },
 	data() {
 		return {
 			resumes: [],
@@ -254,6 +216,7 @@ export default {
 		async remove(item) {
 			this.$infoBox(this.local("Delete this resume?"), {
 				theme: this.theme,
+				status: "error",
 				confirmTitle: this.local("Confirm"),
 				cancelTitle: this.local("Cancel"),
 				confirm: async () => {
@@ -320,41 +283,5 @@ export default {
 }
 .muted {
 	color: #8f839a;
-}
-.editor-panel {
-    position: relative;
-    width: 100%;
-	height: 100%;
-	display: flex;
-	flex-direction: column;
-	gap: 16px;
-	padding: 20px;
-}
-.editor-panel label,
-.editor-panel .bind-user-label {
-	display: grid;
-	gap: 7px;
-	color: #5d5570;
-	font-size: 13px;
-	font-weight: 700;
-}
-.editor-panel select {
-	padding: 11px;
-	border: 1px solid #e1d8ee;
-	border-radius: 10px;
-	background: #fffafc;
-	font: inherit;
-}
-.editor-panel .user-picker {
-	width: 100%;
-}
-.editor-panel power-editor {
-	min-height: 500px;
-	flex: 1;
-}
-.hint {
-	margin: 0;
-	color: #978ba3;
-	font-size: 12px;
 }
 </style>

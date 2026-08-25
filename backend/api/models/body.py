@@ -165,6 +165,20 @@ class ProductItem(BaseModel):
     publisher_id: Optional[str] = None
 
 
+class ProjectItem(BaseModel):
+    id: Optional[str] = None
+    name: str
+    info: Optional[str] = None
+    repo_type: Optional[str] = None
+    href: Optional[str] = None
+    icon: Optional[str] = None
+    favor: bool = False
+    audit_status: Optional[str] = None
+    publish_time: Optional[str] = None
+    update_time: Optional[str] = None
+    publisher_id: Optional[str] = None
+
+
 class ProductReviewItem(BaseModel):
     id: Optional[str] = None
     product_id: str

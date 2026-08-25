@@ -62,6 +62,20 @@ class ProductDBModel(BaseDBModel):
     publisher_id = fields.CharField(max_length=255, null=True)
 
 
+class ProjectDBModel(BaseDBModel):
+    id = fields.CharField(max_length=64, pk=True)
+    name = fields.CharField(max_length=255)
+    info = fields.TextField(null=True)
+    repo_type = fields.CharField(max_length=64, null=True)
+    href = fields.TextField(null=True)
+    icon = fields.TextField(null=True)
+    favor = fields.BooleanField(default=False)
+    audit_status = fields.CharField(max_length=64, null=True)
+    publish_time = fields.CharField(max_length=255, null=True)
+    update_time = fields.CharField(max_length=255, null=True)
+    publisher_id = fields.CharField(max_length=255, null=True)
+
+
 class ProductReviewDBModel(BaseDBModel):
     id = fields.CharField(max_length=64, pk=True)
     product = fields.ForeignKeyField('models.ProductDBModel', related_name='reviews', on_delete=fields.CASCADE)

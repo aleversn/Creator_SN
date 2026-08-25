@@ -42,6 +42,12 @@ export default {
 					icon: "ReadingMode",
 					route: "/admin/resumes",
 				},
+				{
+					key: 2,
+					name: "Project Management",
+					icon: "ProductList",
+					route: "/admin/projects",
+				},
 				{ key: -1, name: "Home", icon: "Home", route: "/" },
 			],
 		};

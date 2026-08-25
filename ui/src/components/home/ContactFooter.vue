@@ -20,11 +20,10 @@
 					href="https://github.com/Creator-SN"
 					target="_blank"
 					rel="noreferrer"
-					><span
-						class="ms-Icon ms-Icon--GitHubLogo"
-						aria-hidden="true"
-					></span
-					>{{ local("GitHub") }}</a
+					><img
+						src="@/assets/contact/github.svg"
+						:alt="local('GitHub')"
+					/>{{ local("GitHub") }}</a
 				><a href="mailto:lpcsn@qq.com"
 					><span
 						class="ms-Icon ms-Icon--Mail"

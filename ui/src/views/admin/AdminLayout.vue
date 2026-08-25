@@ -4,7 +4,7 @@
 			<fv-navigation-view
 				v-model="currentNav"
 				theme="light"
-				:title="local('Admin Console')"
+				:title="local('Console')"
 				:options="navList"
 				v-model:expand="isExpand"
 				foreground="#a56bd1"

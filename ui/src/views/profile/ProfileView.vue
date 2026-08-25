@@ -9,11 +9,17 @@
 				<fv-button
 					theme="dark"
 					:background="heroGradient"
+					:revealBackgroundGradientList="[
+						'rgba(255, 213, 188, 0.68)',
+						'rgba(255, 213, 188, 0.18)',
+						'rgba(143, 97, 231, 0.12)',
+					]"
 					border-radius="20"
-					font-size="10"
+					font-size="12"
+                    font-weight="bold"
 					style="width: 80px"
 					@click="$Go('/admin/users')"
-					>{{ local("Admin console") }}</fv-button
+					>{{ local("Console") }}</fv-button
 				>
 				<button class="logout" @click="logout">
 					{{ local("Sign out") }}
@@ -110,9 +116,16 @@
 				</div>
 				<div class="section">
 					<h3>{{ local("Change avatar") }}</h3>
-					<AvatarUploader @update:file="avatarFile = $event" /><button
-						class="soft-button"
+					<AvatarUploader @update:file="avatarFile = $event" />
+					<fv-button
+						border-color="#d7b8eb"
+						background="#f8ecff"
+						foreground="#784ca5"
 						:disabled="!avatarFile || savingAvatar"
+						font-size="16"
+						border-radius="12"
+						font-weight="bold"
+						style="width: 120px; height: 45px; margin-top: 10px"
 						@click="uploadAvatar"
 					>
 						{{
@@ -120,17 +133,30 @@
 								? local("Uploading…")
 								: local("Save avatar")
 						}}
-					</button>
+					</fv-button>
 				</div>
 				<div class="section">
 					<h3>{{ local("Account details") }}</h3>
-					<button
-						class="primary-button"
+					<fv-button
+						theme="dark"
+						:background="heroGradient"
+						foreground="#ffffff"
+						border-color="#efb2e7"
+						:reveal-border-gradient-list="buttonGradient"
+						:revealBackgroundGradientList="[
+							'rgba(255, 213, 188, 0.38)',
+							'rgba(255, 213, 188, 0.18)',
+							'rgba(143, 97, 231, 0.12)',
+						]"
+						:border-radius="12"
+						:is-box-shadow="true"
+						:reveal-border-color="true"
 						:disabled="saving"
+						style="min-width: 120px; height: 40px; font-size: 15px"
 						@click="saveProfile"
 					>
 						{{ saving ? local("Saving…") : local("Save details") }}
-					</button>
+					</fv-button>
 				</div>
 				<div class="section password">
 					<h3>{{ local("Change password") }}</h3>

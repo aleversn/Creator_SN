@@ -10,6 +10,7 @@
 				theme="dark"
 				:background="gradient"
 				border-radius="8"
+				style="width: 120px"
 				@click="openCreate"
 				>{{ local("Add resume") }}</fv-button
 			>
@@ -106,6 +107,7 @@
 					:background="gradient"
 					border-radius="8"
 					:disabled="saving"
+					style="width: 120px"
 					@click="save"
 					>{{
 						saving ? local("Saving…") : local("Save resume")
@@ -320,6 +322,8 @@ export default {
 	color: #8f839a;
 }
 .editor-panel {
+    position: relative;
+    width: 100%;
 	height: 100%;
 	display: flex;
 	flex-direction: column;

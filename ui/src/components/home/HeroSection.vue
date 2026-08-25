@@ -22,6 +22,11 @@
 				foreground="#ffffff"
 				border-color="#efb2e7"
 				:reveal-border-gradient-list="buttonGradient"
+				:revealBackgroundGradientList="[
+					'rgba(255, 213, 188, 0.38)',
+					'rgba(255, 213, 188, 0.18)',
+					'rgba(143, 97, 231, 0.12)',
+				]"
 				:border-radius="28"
 				:is-box-shadow="true"
 				:reveal-border-color="true"

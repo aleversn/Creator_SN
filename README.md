@@ -14,6 +14,20 @@ Build and run the integrated service with. The production reverse proxy can
 continue forwarding the existing `60081` entry point to this service's port
 `8000`; there is no separate frontend container anymore.
 
+When deploying through a remote Docker context, bind-mounted data must point
+to directories on the Docker server, not the local computer. Set the server
+data directory before running Compose, for example in PowerShell:
+
+```powershell
+$env:CREATOR_SN_DATA_DIR = "/opt/creator-sn-data"
+docker context use <server-context>
+docker compose up -d --build
+```
+
+The database and uploaded files will then be stored under
+`/opt/creator-sn-data` on the server. The default `./backend` value remains
+available for local Docker deployments.
+
 ```powershell
 docker compose up --build
 ```

@@ -1,5 +1,5 @@
 services:
-  backend:
+  web:
     build:
       context: .
       dockerfile: backend/Dockerfile
@@ -8,11 +8,11 @@ services:
     environment:
       PYTHONPATH: /app
     volumes:
-      - ./backend/db:/app/db
-      - ./backend/backup:/app/backup
-      - ./backend/member_cv:/app/member_cv
-      - ./backend/products:/app/products
-      - ./backend/projects:/app/projects
-      - ./backend/resume_images:/app/resume_images
-      - ./backend/user:/app/user
+      - ${CREATOR_SN_DATA_DIR:-./backend}/db:/app/db
+      - ${CREATOR_SN_DATA_DIR:-./backend}/backup:/app/backup
+      - ${CREATOR_SN_DATA_DIR:-./backend}/member_cv:/app/member_cv
+      - ${CREATOR_SN_DATA_DIR:-./backend}/products:/app/products
+      - ${CREATOR_SN_DATA_DIR:-./backend}/projects:/app/projects
+      - ${CREATOR_SN_DATA_DIR:-./backend}/resume_images:/app/resume_images
+      - ${CREATOR_SN_DATA_DIR:-./backend}/user:/app/user
     restart: unless-stopped

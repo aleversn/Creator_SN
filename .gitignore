@@ -1,5 +1,6 @@
 .DS_Store
 .vite/
+.env
 
 backend/__pycache__/
 backend/**/*.py[cod]

@@ -23,6 +23,7 @@
 					theme="dark"
 					:background="gradient"
 					border-radius="9"
+					style="width: 120px"
 					@click="createOwnResume"
 					>{{ local("Create my resume") }}</fv-button
 				>
@@ -165,7 +166,9 @@ export default {
 	watch: {
 		"$route.query.email"() {
 			if (!this.resumes.length) return;
-			const email = String(this.$route.query.email || "").trim().toLowerCase();
+			const email = String(this.$route.query.email || "")
+				.trim()
+				.toLowerCase();
 			const target =
 				this.resumes.find(
 					(item) => this.resumeEmail(item).toLowerCase() === email,
@@ -210,10 +213,7 @@ export default {
 								.trim()
 								.toLowerCase(),
 					);
-					this.selectResume(
-						routeResume || this.resumes[0],
-						false,
-					);
+					this.selectResume(routeResume || this.resumes[0], false);
 					await this.loadAvatars();
 				}
 			} finally {

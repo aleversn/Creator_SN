@@ -30,6 +30,7 @@
 				:border-radius="28"
 				:is-box-shadow="true"
 				:reveal-border-color="true"
+				@click="$Go('/home/projects')"
 				>{{ local("Explore our projects") }}
 				<span
 					class="ms-Icon ms-Icon--ChevronRight"

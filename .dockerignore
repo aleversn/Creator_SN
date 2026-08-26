@@ -1,0 +1,9 @@
+.git
+.agents
+.codex
+**/__pycache__
+**/*.pyc
+ui/node_modules
+ui/dist
+backend/db/*.sqlite3
+backend/backup

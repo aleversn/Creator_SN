@@ -3,8 +3,9 @@ import contextlib
 import json
 from pathlib import Path
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from tortoise.contrib.fastapi import register_tortoise
 
 from api.controllers.member import router as member_router
@@ -12,11 +13,11 @@ from api.controllers.product import router as product_router
 from api.controllers.project import router as project_router, seed_default_projects
 from api.controllers.resume import router as resume_router
 from api.controllers.user import router as user_router
-from api.models.body import response_body
 from api.models.db_backup import create_monthly_db_backup
 
 
 BASE_DIR = Path(__file__).resolve().parent
+STATIC_DIR = BASE_DIR / 'static'
 CONFIG_PATH = BASE_DIR / 'api' / 'app_config.json'
 with CONFIG_PATH.open(encoding='utf-8') as config_file:
     app_config = json.load(config_file)
@@ -29,6 +30,14 @@ app.add_middleware(
     allow_methods=['*'],
     allow_headers=['*'],
 )
+
+
+@app.middleware('http')
+async def api_compatibility_prefix(request: Request, call_next):
+    """Keep the frontend's /api URLs compatible with the existing API routes."""
+    if request.scope['path'] == '/api' or request.scope['path'].startswith('/api/'):
+        request.scope['path'] = request.scope['path'][4:] or '/'
+    return await call_next(request)
 
 DB_DIR = BASE_DIR / 'db'
 DB_DIR.mkdir(parents=True, exist_ok=True)
@@ -74,7 +83,8 @@ app.include_router(product_router)
 app.include_router(project_router)
 app.include_router(resume_router)
 
-
-@app.get('/', operation_id='Home')
-def home():
-    return response_body(message='Creator SN Backend is running...')()
+# The frontend is built into this directory by the multi-stage Dockerfile.
+# html=True also serves index.html for the root document; the Vue app uses hash
+# history, so client-side routes do not require additional server rewrites.
+STATIC_DIR.mkdir(parents=True, exist_ok=True)
+app.mount('/', StaticFiles(directory=STATIC_DIR, html=True), name='frontend')

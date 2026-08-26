@@ -1,6 +1,7 @@
 .DS_Store
 .vite/
 .env
+backend/api/app_config.json
 
 backend/__pycache__/
 backend/**/*.py[cod]

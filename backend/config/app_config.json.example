@@ -1,0 +1,7 @@
+{
+  "root_name": "admin",
+  "root_pwd": "change-me",
+  "invite_code": "change-me",
+  "jwt_key": "change-me-in-production",
+  "allow_origins": ["*"]
+}
